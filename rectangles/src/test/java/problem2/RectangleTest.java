@@ -57,4 +57,28 @@ public class RectangleTest {
         Point point = new Point(1, -1);
         assertFalse(rectangle.contains(point));
     }
+
+    @Test
+    public void shouldContainPointOnLeftLine() {
+        Point point = new Point(0, 1);
+        assertTrue(rectangle.contains(point));
+    }
+
+    @Test
+    public void shouldContainPointOnTopLine() {
+        Point point = new Point(1, 2);
+        assertTrue(rectangle.contains(point));
+    }
+
+    @Test
+    public void shouldContainPointOnRightLine() {
+        Point point = new Point(2, 1);
+        assertTrue(rectangle.contains(point));
+    }
+
+    @Test
+    public void shouldContainPointOnBottomLine() {
+        Point point = new Point(1, 0);
+        assertTrue(rectangle.contains(point));
+    }
 }
