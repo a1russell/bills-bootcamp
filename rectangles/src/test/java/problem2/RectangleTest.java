@@ -29,7 +29,7 @@ public class RectangleTest {
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void shouldNotConstructWithNoLength() {
+    public void shouldNotConstructWithNoWidth() {
         Point topLeft = new Point(0, 1);
         Point topRight = topLeft;
         Point bottomRight = new Point(0, 0);
@@ -39,7 +39,7 @@ public class RectangleTest {
 
 
     @Test(expected=IllegalArgumentException.class)
-    public void shouldNotConstructWithNoWidth() {
+    public void shouldNotConstructWithNoHeight() {
         Point topLeft = new Point(0, 0);
         Point topRight = new Point(1, 0);
         Point bottomRight = topRight;

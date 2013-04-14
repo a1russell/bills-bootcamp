@@ -26,13 +26,13 @@ public class Rectangle {
     private void validate() {
         Vector ab = new Vector(corners.getValue0(), corners.getValue1());
         Vector bc = new Vector(corners.getValue1(), corners.getValue2());
-        validateLengthAndWidth(ab, bc);
+        validateWidthAndHeight(ab, bc);
         validatePerpendicularSides(ab, bc);
     }
 
-    private void validateLengthAndWidth(Vector ab, Vector bc) {
+    private void validateWidthAndHeight(Vector ab, Vector bc) {
         if (ab.isNullVector() || bc.isNullVector()) {
-            throw new IllegalArgumentException("Must have nonzero length and width.");
+            throw new IllegalArgumentException("Must have nonzero width and height.");
         }
     }
 
