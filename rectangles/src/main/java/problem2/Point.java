@@ -1,14 +1,13 @@
 package problem2;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 
 @EqualsAndHashCode
+@AllArgsConstructor
 public class Point {
-    private int x;
-    private int y;
-
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
+    @Getter @NonNull protected double x;
+    @Getter @NonNull protected double y;
 }
