@@ -37,6 +37,16 @@ public class RectangleTest {
         new Rectangle(topLeft, topRight, bottomRight);
     }
 
+
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldNotConstructWithNoWidth() {
+        Point topLeft = new Point(0, 0);
+        Point topRight = new Point(1, 0);
+        Point bottomRight = topRight;
+
+        new Rectangle(topLeft, topRight, bottomRight);
+    }
+
     @Test
     public void shouldContainPoint() {
         Point point = new Point(1, 1);
