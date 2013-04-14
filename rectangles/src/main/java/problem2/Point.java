@@ -1,3 +1,5 @@
+package problem2;
+
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode

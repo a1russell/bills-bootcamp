@@ -1,3 +1,5 @@
+package problem2;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +19,7 @@ public class RectangleTest {
     }
 
     @Test
-    public void shouldDeterminePointIsInside() {
+    public void shouldContainPoint() {
         Point point = new Point(1, 1);
         assertTrue(rectangle.contains(point));
     }

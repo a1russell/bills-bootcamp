@@ -1,3 +1,5 @@
+package problem2;
+
 import org.javatuples.Triplet;
 
 public class Rectangle {
