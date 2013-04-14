@@ -26,6 +26,17 @@ public class Rectangle {
     private void validate() {
         Vector ab = new Vector(corners.getValue0(), corners.getValue1());
         Vector bc = new Vector(corners.getValue1(), corners.getValue2());
+        validateLength(ab);
+        validatePerpendicularSides(ab, bc);
+    }
+
+    private void validateLength(Vector ab) {
+        if (ab.isNullVector()) {
+            throw new IllegalArgumentException("Must have nonzero length.");
+        }
+    }
+
+    private void validatePerpendicularSides(Vector ab, Vector bc) {
         if (ab.dotProduct(bc) != 0) {
             throw new IllegalArgumentException("The side formed by corner1 and corner2" +
                                                "must form a right angle with the side " +

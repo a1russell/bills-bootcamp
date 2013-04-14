@@ -20,10 +20,19 @@ public class RectangleTest {
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void shouldNotConstructGivenInvalidArguments() {
+    public void shouldNotConstructGivenNonPerpendicularSides() {
         Point topLeft = new Point(0, 2);
         Point topRight = new Point(2, 2);
         Point bottomRight = new Point(1, 1);
+
+        new Rectangle(topLeft, topRight, bottomRight);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldNotConstructWithNoLength() {
+        Point topLeft = new Point(0, 1);
+        Point topRight = topLeft;
+        Point bottomRight = new Point(0, 0);
 
         new Rectangle(topLeft, topRight, bottomRight);
     }
