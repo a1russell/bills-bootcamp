@@ -8,6 +8,7 @@ public class Rectangle {
 
     public Rectangle(Point corner1, Point corner2, Point corner3) {
         this.corners = Triplet.with(corner1, corner2, corner3);
+        validate();
     }
 
     public boolean contains(Point point) {
@@ -20,5 +21,15 @@ public class Rectangle {
                ab.dotProduct(ap) <= ab.dotProduct(ab) &&
                0 <= bc.dotProduct(bp) &&
                bc.dotProduct(bp) <= bc.dotProduct(bc);
+    }
+
+    private void validate() {
+        Vector ab = new Vector(corners.getValue0(), corners.getValue1());
+        Vector bc = new Vector(corners.getValue1(), corners.getValue2());
+        if (ab.dotProduct(bc) != 0) {
+            throw new IllegalArgumentException("The side formed by corner1 and corner2" +
+                                               "must form a right angle with the side " +
+                                               "formed by corner2 and corner3.");
+        }
     }
 }
