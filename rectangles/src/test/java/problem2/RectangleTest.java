@@ -20,7 +20,7 @@ public class RectangleTest {
     }
 
     @Test
-    public void shouldContainPoint() {
+    public void shouldContainPointThatIsInside() {
         Point point = new Point(1, 1);
         assertTrue(rectangle.contains(point));
     }
