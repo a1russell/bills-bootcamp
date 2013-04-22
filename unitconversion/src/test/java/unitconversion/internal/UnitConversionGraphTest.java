@@ -32,4 +32,12 @@ public class UnitConversionGraphTest {
         graph.addEdge(tspPerTbsp, tsp, tbsp);
         assertEquals((Object) (tbspPerTsp), graph.findEdge(tbsp, tsp));
     }
+
+    @Test
+    public void shouldTreatIntEdgeAsDoubleWhenAddingEdge() throws Exception {
+        graph.addVertex(tsp);
+        graph.addVertex(tbsp);
+        graph.addEdge(((Double) tspPerTbsp).intValue(), tsp, tbsp);
+        assertEquals((Object) tspPerTbsp, graph.findEdge(tsp, tbsp));
+    }
 }
