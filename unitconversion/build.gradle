@@ -5,6 +5,23 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    provided
+}
+
+sourceSets {
+    main { compileClasspath += configurations.provided }
+}
+
+idea {
+    module {
+        scopes.PROVIDED.plus += configurations.provided
+    }
+}
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.+'
+    provided 'org.projectlombok:lombok:0.11.+'
+    compile 'com.google.guava:guava:14.0.+'
+    compile 'net.sf.jung:jung-graph-impl:2.0.+'
+    testCompile 'junit:junit:4.+'
 }
