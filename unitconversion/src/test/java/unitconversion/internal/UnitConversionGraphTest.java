@@ -2,14 +2,13 @@ package unitconversion.internal;
 
 import org.junit.Before;
 import org.junit.Test;
-import unitconversion.Unit;
 
 import static org.junit.Assert.assertEquals;
 
 public class UnitConversionGraphTest {
     private UnitConversionGraph graph;
-    private Unit tsp = new Unit("tsp");
-    private Unit tbsp = new Unit("tbsp");
+    private String tsp = "tsp.";
+    private String tbsp = "tbsp.";
     private double tspPerTbsp = 3;
     private double tbspPerTsp = 1./3;
 
