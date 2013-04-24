@@ -2,6 +2,7 @@ package unitconversion.internal;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import unitconversion.InvalidConversionException;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -10,7 +11,7 @@ import java.util.HashSet;
 public class UnitConversion {
     @NonNull private UnitConversionGraph graph;
 
-    public double getMultiplier(String originalUnit, String desiredUnit) {
+    public double getMultiplier(String originalUnit, String desiredUnit) throws InvalidConversionException {
         double currentMultiplier = 1;
         if (originalUnit.equals(desiredUnit)) {
             return currentMultiplier;
@@ -20,8 +21,8 @@ public class UnitConversion {
         return getMultiplier(originalUnit, desiredUnit, currentMultiplier, unitsVisited);
     }
 
-    private double getMultiplier(String originalUnit, String desiredUnit,
-                                 double currentMultiplier, Collection<String> unitsVisited) {
+    private double getMultiplier(String originalUnit, String desiredUnit, double currentMultiplier,
+                                 Collection<String> unitsVisited) throws InvalidConversionException {
         String unitToTraverse = originalUnit;
         for (String currentUnit : graph.getNeighbors(originalUnit)) {
             if (unitsVisited.contains(currentUnit)) {
@@ -32,6 +33,9 @@ public class UnitConversion {
             }
             unitsVisited.add(currentUnit);
             unitToTraverse = currentUnit;
+        }
+        if (originalUnit.equals(unitToTraverse)) {
+            throw new InvalidConversionException();
         }
         return getMultiplier(unitToTraverse, desiredUnit,
                              calculateCurrentMultiplier(currentMultiplier, originalUnit, unitToTraverse),

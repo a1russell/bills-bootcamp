@@ -2,6 +2,7 @@ package unitconversion.internal;
 
 import org.junit.Before;
 import org.junit.Test;
+import unitconversion.InvalidConversionException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -45,5 +46,10 @@ public class UnitConversionTest {
     public void shouldReturnFortyEightTspPerCup() throws Exception {
         double multiplier = conversion.getMultiplier(tsp, cup);
         assertEquals((Object) 48.0, multiplier);
+    }
+
+    @Test(expected=InvalidConversionException.class)
+    public void shouldThrowExceptionWhenNoPathExistsBetweenRequestedVertices() throws Exception {
+        conversion.getMultiplier(tsp, "foot");
     }
 }
