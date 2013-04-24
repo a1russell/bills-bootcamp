@@ -1,11 +1,10 @@
 package unitconversion;
 
-import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
-import unitconversion.internal.MultiplyingWeightTransformer;
+import unitconversion.internal.UnitConversion;
 import unitconversion.internal.UnitConversionGraph;
 
 public class UnitConversions {
-    UnitConversionGraph graph = new UnitConversionGraph();
+    private UnitConversionGraph graph = new UnitConversionGraph();
 
     public UnitConversions() {
         String tsp = "tsp.";
@@ -20,9 +19,8 @@ public class UnitConversions {
         graph.addEdge(16, tbsp, cup);
     }
 
-    public double convert(String originalUnit, String desiredUnit) {
-        MultiplyingWeightTransformer transformer = new MultiplyingWeightTransformer();
-        DijkstraShortestPath<String, Double> path = new DijkstraShortestPath<String, Double>(graph, transformer);
-        return path.getDistance(originalUnit, desiredUnit).doubleValue();
+    public double convert(String originalUnit, String desiredUnit) throws InvalidConversionException {
+        UnitConversion conversion = new UnitConversion(graph);
+        return 1 / conversion.getMultiplier(originalUnit, desiredUnit);
     }
 }
