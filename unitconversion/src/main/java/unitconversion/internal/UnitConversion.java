@@ -3,6 +3,7 @@ package unitconversion.internal;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import unitconversion.InvalidConversionException;
+import unitconversion.Unit;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -11,12 +12,12 @@ import java.util.HashSet;
 public class UnitConversion {
     @NonNull private UnitConversionGraph graph;
 
-    public double getMultiplier(String originalUnit, String desiredUnit) throws InvalidConversionException {
+    public double getMultiplier(Unit originalUnit, Unit desiredUnit) throws InvalidConversionException {
         double currentMultiplier = 1;
         if (originalUnit.equals(desiredUnit)) {
             return currentMultiplier;
         }
-        Collection<String> unitsVisited = new HashSet<String>();
+        Collection<Unit> unitsVisited = new HashSet<Unit>();
         unitsVisited.add(originalUnit);
         double multiplier = getMultiplier(originalUnit, desiredUnit, currentMultiplier, unitsVisited);
         if (multiplier == 0) {
@@ -25,10 +26,10 @@ public class UnitConversion {
         return multiplier;
     }
 
-    private double getMultiplier(String originalUnit, String desiredUnit,
-                                 double currentMultiplier, Collection<String> unitsVisited) {
+    private double getMultiplier(Unit originalUnit, Unit desiredUnit,
+                                 double currentMultiplier, Collection<Unit> unitsVisited) {
         double multiplier = 0;
-        for (String currentUnit : graph.getNeighbors(originalUnit)) {
+        for (Unit currentUnit : graph.getNeighbors(originalUnit)) {
             if (unitsVisited.contains(currentUnit)) {
                 continue;
             }
@@ -46,7 +47,7 @@ public class UnitConversion {
         return multiplier;
     }
 
-    private double calculateCurrentMultiplier(double currentMultiplier, String originalUnit, String currentUnit) {
+    private double calculateCurrentMultiplier(double currentMultiplier, Unit originalUnit, Unit currentUnit) {
         return currentMultiplier * graph.findEdge(originalUnit, currentUnit).getMultiplier();
     }
 }

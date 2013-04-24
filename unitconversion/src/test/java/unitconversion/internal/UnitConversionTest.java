@@ -3,67 +3,63 @@ package unitconversion.internal;
 import org.junit.Before;
 import org.junit.Test;
 import unitconversion.InvalidConversionException;
+import unitconversion.Unit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
 
 public class UnitConversionTest {
-    private UnitConversionGraph graph;
     private UnitConversion conversion;
-    private String tsp = "tsp.";
-    private String tbsp = "tbsp.";
-    private String oz = "fl oz";
-    private String cup = "cup";
 
     @Before
     public void setUp() {
-        graph = new UnitConversionGraph();
+        UnitConversionGraph graph = new UnitConversionGraph();
 
-        graph.addVertex(tsp);
-        graph.addVertex(tbsp);
-        graph.addVertex(oz);
-        graph.addVertex(cup);
+        graph.addVertex(Unit.TSP);
+        graph.addVertex(Unit.TBSP);
+        graph.addVertex(Unit.FL_OZ);
+        graph.addVertex(Unit.CUP);
 
-        graph.addEdge(3, tsp, tbsp);
-        graph.addEdge(2, tbsp, oz);
-        graph.addEdge(8, oz, cup);
+        graph.addEdge(3, Unit.TSP, Unit.TBSP);
+        graph.addEdge(2, Unit.TBSP, Unit.FL_OZ);
+        graph.addEdge(8, Unit.FL_OZ, Unit.CUP);
 
         conversion = new UnitConversion(graph);
     }
 
     @Test
     public void shouldReturnOneTspPerTsp() throws Exception {
-        double multiplier = conversion.getMultiplier(tsp, tsp);
+        double multiplier = conversion.getMultiplier(Unit.TSP, Unit.TSP);
         assertThat(multiplier, is(1.0));
     }
 
     @Test
     public void shouldReturnThreeTspPerTbsp() throws Exception {
-        double multiplier = conversion.getMultiplier(tsp, tbsp);
+        double multiplier = conversion.getMultiplier(Unit.TSP, Unit.TBSP);
         assertThat(multiplier, is(3.0));
     }
 
     @Test
     public void shouldReturnFortyEightTspPerCup() throws Exception {
-        double multiplier = conversion.getMultiplier(tsp, cup);
+        double multiplier = conversion.getMultiplier(Unit.TSP, Unit.CUP);
         assertThat(multiplier, is(48.0));
     }
 
     @Test
     public void shouldReturnTwoTbspPerCup() throws Exception {
-        double multiplier = conversion.getMultiplier(tbsp, cup);
+        double multiplier = conversion.getMultiplier(Unit.TBSP, Unit.CUP);
         assertThat(multiplier, is(16.0));
     }
 
     @Test
     public void shouldReturnOneSixthFlOzPerTsp() throws Exception {
-        double multiplier = conversion.getMultiplier(oz, tsp);
+        double multiplier = conversion.getMultiplier(Unit.FL_OZ, Unit.TSP);
         assertThat(multiplier, closeTo(0.1667, 0.0001));
     }
 
     @Test(expected=InvalidConversionException.class)
     public void shouldThrowExceptionWhenNoPathExistsBetweenRequestedVertices() throws Exception {
-        conversion.getMultiplier(tsp, "foot");
+        conversion.getMultiplier(Unit.TSP, Unit.FT);
     }
 }

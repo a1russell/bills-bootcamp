@@ -7,9 +7,9 @@ import lombok.NonNull;
 public class Measurement {
     @NonNull private UnitConversions unitConversions;
     @NonNull private int quantity;
-    @NonNull private String unit;
+    @NonNull private Unit unit;
 
-    public double convert(String desiredUnit) throws InvalidConversionException {
+    public double convert(Unit desiredUnit) throws InvalidConversionException {
         return quantity * unitConversions.convert(unit, desiredUnit);
     }
 }

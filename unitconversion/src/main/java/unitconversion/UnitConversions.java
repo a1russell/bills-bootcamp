@@ -4,33 +4,25 @@ import unitconversion.internal.UnitConversion;
 import unitconversion.internal.UnitConversionGraph;
 
 public class UnitConversions {
-    private UnitConversionGraph graph = new UnitConversionGraph();
+    private final UnitConversionGraph graph = new UnitConversionGraph();
 
     public UnitConversions() {
-        String tsp = "tsp.";
-        String tbsp = "tbsp.";
-        String cup = "cup";
+        graph.addVertex(Unit.TSP);
+        graph.addVertex(Unit.TBSP);
+        graph.addVertex(Unit.CUP);
 
-        graph.addVertex(tsp);
-        graph.addVertex(tbsp);
-        graph.addVertex(cup);
+        graph.addEdge(3, Unit.TSP, Unit.TBSP);
+        graph.addEdge(16, Unit.TBSP, Unit.CUP);
 
-        graph.addEdge(3, tsp, tbsp);
-        graph.addEdge(16, tbsp, cup);
+        graph.addVertex(Unit.IN);
+        graph.addVertex(Unit.FT);
+        graph.addVertex(Unit.YD);
 
-        String in = "in.";
-        String ft = "ft.";
-        String yd = "yd.";
-
-        graph.addVertex(in);
-        graph.addVertex(ft);
-        graph.addVertex(yd);
-
-        graph.addEdge(12, in, ft);
-        graph.addEdge(3, ft, yd);
+        graph.addEdge(12, Unit.IN, Unit.FT);
+        graph.addEdge(3, Unit.FT, Unit.YD);
     }
 
-    public double convert(String originalUnit, String desiredUnit) throws InvalidConversionException {
+    public double convert(Unit originalUnit, Unit desiredUnit) throws InvalidConversionException {
         UnitConversion conversion = new UnitConversion(graph);
         return 1 / conversion.getMultiplier(originalUnit, desiredUnit);
     }

@@ -5,10 +5,10 @@ public class Main {
     public static void main(String[] argv) {
         UnitConversions conversions = new UnitConversions();
         int originalQuantity = 3;
-        String originalUnit = "tsp.";
+        Unit originalUnit = Unit.TSP;
         Measurement measurement = new Measurement(conversions, originalQuantity, originalUnit);
-        String desiredUnit = "tbsp.";
-        double desiredQuantity = 0;
+        Unit desiredUnit = Unit.TBSP;
+        double desiredQuantity;
         try {
             desiredQuantity = measurement.convert(desiredUnit);
             System.out.println(Integer.valueOf(originalQuantity).toString() + " " + originalUnit +
