@@ -6,7 +6,7 @@ public class Main {
         UnitConversions conversions = new UnitConversions();
         int originalQuantity = 3;
         Unit originalUnit = Unit.TSP;
-        Measurement measurement = new Measurement(conversions, originalQuantity, originalUnit);
+        MeasurementConverter measurement = new Measurement(conversions, originalQuantity, originalUnit);
         Unit desiredUnit = Unit.TBSP;
         double desiredQuantity;
         try {

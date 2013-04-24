@@ -6,9 +6,9 @@ import com.google.common.collect.Multiset;
 import java.util.Collections;
 
 public class MixedMeasurement implements MeasurementConverter {
-    private Multiset<Measurement> measurements;
+    private Multiset<MeasurementConverter> measurements;
 
-    public MixedMeasurement(Measurement ... measurements) {
+    public MixedMeasurement(MeasurementConverter ... measurements) {
         this.measurements = HashMultiset.create();
         Collections.addAll(this.measurements, measurements);
     }
@@ -16,7 +16,7 @@ public class MixedMeasurement implements MeasurementConverter {
     @Override
     public double convert(Unit desiredUnit) throws InvalidConversionException {
         double total = 0;
-        for (Measurement measurement : measurements) {
+        for (MeasurementConverter measurement : measurements) {
             total += measurement.convert(desiredUnit);
         }
         return total;
