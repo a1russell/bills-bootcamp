@@ -6,7 +6,7 @@ import unitconversion.InvalidConversionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.is;
 
 public class UnitConversionTest {
     private UnitConversionGraph graph;
@@ -35,31 +35,31 @@ public class UnitConversionTest {
     @Test
     public void shouldReturnOneTspPerTsp() throws Exception {
         double multiplier = conversion.getMultiplier(tsp, tsp);
-        assertEquals((Object) 1.0, multiplier);
+        assertThat(multiplier, is(1.0));
     }
 
     @Test
     public void shouldReturnThreeTspPerTbsp() throws Exception {
         double multiplier = conversion.getMultiplier(tsp, tbsp);
-        assertEquals((Object) 3.0, multiplier);
+        assertThat(multiplier, is(3.0));
     }
 
     @Test
     public void shouldReturnFortyEightTspPerCup() throws Exception {
         double multiplier = conversion.getMultiplier(tsp, cup);
-        assertEquals((Object) 48.0, multiplier);
+        assertThat(multiplier, is(48.0));
     }
 
     @Test
     public void shouldReturnTwoTbspPerCup() throws Exception {
         double multiplier = conversion.getMultiplier(tbsp, cup);
-        assertEquals((Object) 16.0, multiplier);
+        assertThat(multiplier, is(16.0));
     }
 
     @Test
     public void shouldReturnOneSixthFlOzPerTsp() throws Exception {
         double multiplier = conversion.getMultiplier(oz, tsp);
-        assertThat(0.1667, closeTo(multiplier, 0.0001));
+        assertThat(multiplier, closeTo(0.1667, 0.0001));
     }
 
     @Test(expected=InvalidConversionException.class)
