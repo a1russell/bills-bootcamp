@@ -18,12 +18,16 @@ public class UnitConversion {
         }
         Collection<String> unitsVisited = new HashSet<String>();
         unitsVisited.add(originalUnit);
-        return getMultiplier(originalUnit, desiredUnit, currentMultiplier, unitsVisited);
+        double multiplier = getMultiplier(originalUnit, desiredUnit, currentMultiplier, unitsVisited);
+        if (multiplier == 0) {
+            throw new InvalidConversionException();
+        }
+        return multiplier;
     }
 
-    private double getMultiplier(String originalUnit, String desiredUnit, double currentMultiplier,
-                                 Collection<String> unitsVisited) throws InvalidConversionException {
-        String unitToTraverse = originalUnit;
+    private double getMultiplier(String originalUnit, String desiredUnit,
+                                 double currentMultiplier, Collection<String> unitsVisited) {
+        double multiplier = 0;
         for (String currentUnit : graph.getNeighbors(originalUnit)) {
             if (unitsVisited.contains(currentUnit)) {
                 continue;
@@ -32,14 +36,14 @@ public class UnitConversion {
                 return calculateCurrentMultiplier(currentMultiplier, originalUnit, currentUnit);
             }
             unitsVisited.add(currentUnit);
-            unitToTraverse = currentUnit;
+            multiplier = getMultiplier(currentUnit, desiredUnit,
+                                       calculateCurrentMultiplier(currentMultiplier, originalUnit, currentUnit),
+                                       unitsVisited);
+            if (multiplier != 0) {
+                break;
+            }
         }
-        if (originalUnit.equals(unitToTraverse)) {
-            throw new InvalidConversionException();
-        }
-        return getMultiplier(unitToTraverse, desiredUnit,
-                             calculateCurrentMultiplier(currentMultiplier, originalUnit, unitToTraverse),
-                             unitsVisited);
+        return multiplier;
     }
 
     private double calculateCurrentMultiplier(double currentMultiplier, String originalUnit, String currentUnit) {

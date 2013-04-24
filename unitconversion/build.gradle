@@ -25,4 +25,5 @@ dependencies {
     compile 'net.sf.jung:jung-graph-impl:2.0.+'
     compile 'net.sourceforge.collections:collections-generic:4.+'
     testCompile 'junit:junit:4.+'
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
 }
