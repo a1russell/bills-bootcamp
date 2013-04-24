@@ -22,6 +22,7 @@ idea {
 dependencies {
     provided 'org.projectlombok:lombok:0.11.+'
     compile 'net.sf.jung:jung-graph-impl:2.0.+'
+    compile 'com.google.guava:guava:14.0.+'
     testCompile 'junit:junit:4.+'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
 }

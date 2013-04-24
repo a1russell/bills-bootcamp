@@ -6,7 +6,8 @@ import unitconversion.InvalidConversionException;
 import unitconversion.Unit;
 
 import java.util.Collection;
-import java.util.HashSet;
+
+import static com.google.common.collect.Sets.newHashSet;
 
 @AllArgsConstructor
 public class UnitConversion {
@@ -17,7 +18,7 @@ public class UnitConversion {
         if (originalUnit.equals(desiredUnit)) {
             return currentMultiplier;
         }
-        Collection<Unit> unitsVisited = new HashSet<Unit>();
+        Collection<Unit> unitsVisited = newHashSet();
         unitsVisited.add(originalUnit);
         double multiplier = getMultiplier(originalUnit, desiredUnit, currentMultiplier, unitsVisited);
         if (multiplier == 0) {
