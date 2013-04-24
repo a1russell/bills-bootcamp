@@ -34,4 +34,16 @@ public class UnitConversionTest {
         double multiplier = conversion.getMultiplier(tsp, tsp);
         assertEquals((Object) 1.0, multiplier);
     }
+
+    @Test
+    public void shouldReturnThreeTspPerTbsp() throws Exception {
+        double multiplier = conversion.getMultiplier(tsp, tbsp);
+        assertEquals((Object) 3.0, multiplier);
+    }
+
+    @Test
+    public void shouldReturnFortyEightTspPerCup() throws Exception {
+        double multiplier = conversion.getMultiplier(tsp, cup);
+        assertEquals((Object) 48.0, multiplier);
+    }
 }
