@@ -9,7 +9,7 @@ public class Measurement {
     @NonNull private int quantity;
     @NonNull private String unit;
 
-    public double convert(String desiredUnit) {
-        return 6;
+    public double convert(String desiredUnit) throws InvalidConversionException {
+        return quantity * unitConversions.convert(unit, desiredUnit);
     }
 }
