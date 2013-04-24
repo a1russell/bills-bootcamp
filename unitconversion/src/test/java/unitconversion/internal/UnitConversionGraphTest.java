@@ -3,7 +3,8 @@ package unitconversion.internal;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class UnitConversionGraphTest {
     private UnitConversionGraph graph;
@@ -22,7 +23,7 @@ public class UnitConversionGraphTest {
         graph.addVertex(tsp);
         graph.addVertex(tbsp);
         graph.addEdge(tspPerTbsp, tsp, tbsp);
-        assertEquals((Object) tspPerTbsp, graph.findEdge(tsp, tbsp));
+        assertThat(graph.findEdge(tsp, tbsp).getMultiplier(), is(tspPerTbsp));
     }
 
     @Test
@@ -30,7 +31,7 @@ public class UnitConversionGraphTest {
         graph.addVertex(tsp);
         graph.addVertex(tbsp);
         graph.addEdge(tspPerTbsp, tsp, tbsp);
-        assertEquals((Object) (tbspPerTsp), graph.findEdge(tbsp, tsp));
+        assertThat(graph.findEdge(tbsp, tsp).getMultiplier(), is(tbspPerTsp));
     }
 
     @Test
@@ -38,6 +39,6 @@ public class UnitConversionGraphTest {
         graph.addVertex(tsp);
         graph.addVertex(tbsp);
         graph.addEdge(((Double) tspPerTbsp).intValue(), tsp, tbsp);
-        assertEquals((Object) tspPerTbsp, graph.findEdge(tsp, tbsp));
+        assertThat(graph.findEdge(tsp, tbsp).getMultiplier(), is(tspPerTbsp));
     }
 }

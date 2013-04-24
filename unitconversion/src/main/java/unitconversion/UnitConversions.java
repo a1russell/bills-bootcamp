@@ -17,6 +17,17 @@ public class UnitConversions {
 
         graph.addEdge(3, tsp, tbsp);
         graph.addEdge(16, tbsp, cup);
+
+        String in = "in.";
+        String ft = "ft.";
+        String yd = "yd.";
+
+        graph.addVertex(in);
+        graph.addVertex(ft);
+        graph.addVertex(yd);
+
+        graph.addEdge(12, in, ft);
+        graph.addEdge(3, ft, yd);
     }
 
     public double convert(String originalUnit, String desiredUnit) throws InvalidConversionException {
