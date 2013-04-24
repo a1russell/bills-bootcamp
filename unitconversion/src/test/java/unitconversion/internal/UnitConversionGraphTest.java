@@ -17,7 +17,7 @@ public class UnitConversionGraphTest {
     }
 
     @Test
-    public void shouldContainEdgeAfterAdding() throws Exception {
+    public void shouldContainEdgeAfterAddingEdge() throws Exception {
         graph.addVertex(Unit.TSP);
         graph.addVertex(Unit.TBSP);
         graph.addEdge(tspPerTbsp, Unit.TSP, Unit.TBSP);
@@ -25,7 +25,7 @@ public class UnitConversionGraphTest {
     }
 
     @Test
-    public void shouldContainReverseEdgeAfterAdding() throws Exception {
+    public void shouldContainReverseEdgeAfterAddingEdge() throws Exception {
         double tbspPerTsp = 1./3;
         graph.addVertex(Unit.TSP);
         graph.addVertex(Unit.TBSP);
