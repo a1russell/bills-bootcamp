@@ -22,8 +22,8 @@ public class UnitConversionGraphTest {
     public void shouldContainEdgeAfterAddingEdge() throws Exception {
         graph.addVertex(Unit.TSP);
         graph.addVertex(Unit.TBSP);
-        graph.addEdgeAndInverse(tspPerTbspFunction, Unit.TSP, Unit.TBSP);
-        assertThat(graph.findEdge(Unit.TSP, Unit.TBSP).getConversion(), is(tspPerTbspFunction));
+        graph.addEdgeAndInverse(tspPerTbspFunction, Unit.TBSP, Unit.TSP);
+        assertThat(graph.findEdge(Unit.TBSP, Unit.TSP).getConversion(), is(tspPerTbspFunction));
     }
 
     @Test
@@ -31,8 +31,8 @@ public class UnitConversionGraphTest {
         double tbspPerTsp = 1./3;
         graph.addVertex(Unit.TSP);
         graph.addVertex(Unit.TBSP);
-        graph.addEdgeAndInverse(tspPerTbspFunction, Unit.TSP, Unit.TBSP);
-        assertThat(graph.findEdge(Unit.TBSP, Unit.TSP).getConversion().applyAsDouble(1), is(tbspPerTsp));
+        graph.addEdgeAndInverse(tspPerTbspFunction, Unit.TBSP, Unit.TSP);
+        assertThat(graph.findEdge(Unit.TSP, Unit.TBSP).getConversion().applyAsDouble(1), is(tbspPerTsp));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class UnitConversionGraphTest {
         double tbspPerTwoTsp = 2./3;
         graph.addVertex(Unit.TSP);
         graph.addVertex(Unit.TBSP);
-        graph.addEdgeAndInverse(tspPerTbspFunction, Unit.TSP, Unit.TBSP);
-        assertThat(graph.findEdge(Unit.TBSP, Unit.TSP).getConversion().applyAsDouble(2), is(tbspPerTwoTsp));
+        graph.addEdgeAndInverse(tspPerTbspFunction, Unit.TBSP, Unit.TSP);
+        assertThat(graph.findEdge(Unit.TSP, Unit.TBSP).getConversion().applyAsDouble(2), is(tbspPerTwoTsp));
     }
 }

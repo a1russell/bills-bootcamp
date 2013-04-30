@@ -21,45 +21,45 @@ public class UnitConversionTest {
         graph.addVertex(Unit.FL_OZ);
         graph.addVertex(Unit.CUP);
 
-        graph.addEdgeAndInverse((double x) -> 3 * x, Unit.TSP, Unit.TBSP);
-        graph.addEdgeAndInverse((double x) -> 2 * x, Unit.TBSP, Unit.FL_OZ);
-        graph.addEdgeAndInverse((double x) -> 8 * x, Unit.FL_OZ, Unit.CUP);
+        graph.addEdgeAndInverse((double x) -> 3 * x, Unit.TBSP, Unit.TSP);
+        graph.addEdgeAndInverse((double x) -> 2 * x, Unit.FL_OZ, Unit.TBSP);
+        graph.addEdgeAndInverse((double x) -> 8 * x, Unit.CUP, Unit.FL_OZ);
 
         conversion = new UnitConversion(graph);
     }
 
     @Test
     public void shouldReturnOneTspPerTsp() throws Exception {
-        double multiplier = conversion.getMultiplier(Unit.TSP, Unit.TSP);
+        double multiplier = conversion.convert(Unit.TSP, Unit.TSP);
         assertThat(multiplier, is(1.0));
     }
 
     @Test
     public void shouldReturnThreeTspPerTbsp() throws Exception {
-        double multiplier = conversion.getMultiplier(Unit.TSP, Unit.TBSP);
+        double multiplier = conversion.convert(Unit.TBSP, Unit.TSP);
         assertThat(multiplier, is(3.0));
     }
 
     @Test
     public void shouldReturnFortyEightTspPerCup() throws Exception {
-        double multiplier = conversion.getMultiplier(Unit.TSP, Unit.CUP);
+        double multiplier = conversion.convert(Unit.CUP, Unit.TSP);
         assertThat(multiplier, is(48.0));
     }
 
     @Test
     public void shouldReturnTwoTbspPerCup() throws Exception {
-        double multiplier = conversion.getMultiplier(Unit.TBSP, Unit.CUP);
+        double multiplier = conversion.convert(Unit.CUP, Unit.TBSP);
         assertThat(multiplier, is(16.0));
     }
 
     @Test
     public void shouldReturnOneSixthFlOzPerTsp() throws Exception {
-        double multiplier = conversion.getMultiplier(Unit.FL_OZ, Unit.TSP);
+        double multiplier = conversion.convert(Unit.TSP, Unit.FL_OZ);
         assertThat(multiplier, closeTo(0.1667, 0.0001));
     }
 
     @Test(expected=InvalidConversionException.class)
     public void shouldThrowExceptionWhenNoPathExistsBetweenRequestedVertices() throws Exception {
-        conversion.getMultiplier(Unit.TSP, Unit.FT);
+        conversion.convert(Unit.TSP, Unit.FT);
     }
 }

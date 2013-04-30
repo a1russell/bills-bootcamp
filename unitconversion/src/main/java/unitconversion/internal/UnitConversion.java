@@ -15,22 +15,22 @@ public class UnitConversion {
         this.graph = graph;
     }
 
-    public double getMultiplier(Unit originalUnit, Unit desiredUnit) throws InvalidConversionException {
+    public double convert(Unit originalUnit, Unit desiredUnit) throws InvalidConversionException {
         double currentMultiplier = 1;
         if (originalUnit.equals(desiredUnit)) {
             return currentMultiplier;
         }
         Collection<Unit> unitsVisited = newHashSet();
         unitsVisited.add(originalUnit);
-        double multiplier = getMultiplier(originalUnit, desiredUnit, currentMultiplier, unitsVisited);
+        double multiplier = convert(originalUnit, desiredUnit, currentMultiplier, unitsVisited);
         if (multiplier == 0) {
             throw new InvalidConversionException();
         }
         return multiplier;
     }
 
-    private double getMultiplier(Unit originalUnit, Unit desiredUnit,
-                                 double currentMultiplier, Collection<Unit> unitsVisited) {
+    private double convert(Unit originalUnit, Unit desiredUnit,
+                           double currentMultiplier, Collection<Unit> unitsVisited) {
         double multiplier = 0;
         for (Unit currentUnit : graph.getNeighbors(originalUnit)) {
             if (unitsVisited.contains(currentUnit)) {
@@ -40,9 +40,9 @@ public class UnitConversion {
                 return calculateCurrentMultiplier(currentMultiplier, originalUnit, currentUnit);
             }
             unitsVisited.add(currentUnit);
-            multiplier = getMultiplier(currentUnit, desiredUnit,
-                                       calculateCurrentMultiplier(currentMultiplier, originalUnit, currentUnit),
-                                       unitsVisited);
+            multiplier = convert(currentUnit, desiredUnit,
+                                 calculateCurrentMultiplier(currentMultiplier, originalUnit, currentUnit),
+                                 unitsVisited);
             if (multiplier != 0) {
                 break;
             }
