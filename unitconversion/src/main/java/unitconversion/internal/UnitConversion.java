@@ -1,7 +1,5 @@
 package unitconversion.internal;
 
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
 import unitconversion.InvalidConversionException;
 import unitconversion.Unit;
 
@@ -9,9 +7,13 @@ import java.util.Collection;
 
 import static com.google.common.collect.Sets.newHashSet;
 
-@AllArgsConstructor
 public class UnitConversion {
-    @NonNull private UnitConversionGraph graph;
+    private UnitConversionGraph graph;
+
+    public UnitConversion(UnitConversionGraph graph) {
+        if (graph == null) throw new NullPointerException("graph");
+        this.graph = graph;
+    }
 
     public double getMultiplier(Unit originalUnit, Unit desiredUnit) throws InvalidConversionException {
         double currentMultiplier = 1;

@@ -1,9 +1,8 @@
 package unitconversion;
 
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
 public class InvalidConversionException extends Exception {
+    public InvalidConversionException() {}
+
     public InvalidConversionException(String message) {
         super(message);
     }

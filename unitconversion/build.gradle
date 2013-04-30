@@ -1,28 +1,22 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 
+sourceCompatibility = '1.8'
+
 repositories {
     mavenCentral()
 }
 
-configurations {
-    provided
-}
-
-sourceSets {
-    main { compileClasspath += configurations.provided }
-}
-
-idea {
-    module {
-        scopes.PROVIDED.plus += configurations.provided
-    }
-}
-
 dependencies {
-    provided 'org.projectlombok:lombok:0.11.+'
     compile 'net.sf.jung:jung-graph-impl:2.0.+'
     compile 'com.google.guava:guava:14.0.+'
     testCompile 'junit:junit:4.+'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
+}
+
+tasks.withType(Test) {
+    // Workaround for GRADLE-2667
+    scanForTestClasses = false
+    include "**/*Test.class"
+    include "**/*IT.class"
 }
