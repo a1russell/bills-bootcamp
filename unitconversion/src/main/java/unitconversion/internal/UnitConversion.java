@@ -51,6 +51,6 @@ public class UnitConversion {
     }
 
     private double calculateCurrentMultiplier(double currentMultiplier, Unit originalUnit, Unit currentUnit) {
-        return currentMultiplier * graph.findEdge(originalUnit, currentUnit).getMultiplier();
+        return graph.findEdge(originalUnit, currentUnit).getConversion().applyAsDouble(currentMultiplier);
     }
 }

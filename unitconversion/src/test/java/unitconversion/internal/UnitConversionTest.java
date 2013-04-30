@@ -21,9 +21,9 @@ public class UnitConversionTest {
         graph.addVertex(Unit.FL_OZ);
         graph.addVertex(Unit.CUP);
 
-        graph.addEdge(3, Unit.TSP, Unit.TBSP);
-        graph.addEdge(2, Unit.TBSP, Unit.FL_OZ);
-        graph.addEdge(8, Unit.FL_OZ, Unit.CUP);
+        graph.addEdgeAndInverse((double x) -> 3 * x, Unit.TSP, Unit.TBSP);
+        graph.addEdgeAndInverse((double x) -> 2 * x, Unit.TBSP, Unit.FL_OZ);
+        graph.addEdgeAndInverse((double x) -> 8 * x, Unit.FL_OZ, Unit.CUP);
 
         conversion = new UnitConversion(graph);
     }
