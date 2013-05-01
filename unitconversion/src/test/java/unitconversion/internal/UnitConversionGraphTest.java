@@ -21,6 +21,14 @@ public class UnitConversionGraphTest {
     public void shouldContainEdgeAfterAddingEdge() throws Exception {
         graph.addVertex(Unit.TSP);
         graph.addVertex(Unit.TBSP);
+        graph.addEdge(tspPerTbspFunction, Unit.TBSP, Unit.TSP);
+        assertThat(graph.findEdge(Unit.TBSP, Unit.TSP).getConversion(), is(tspPerTbspFunction));
+    }
+
+    @Test
+    public void shouldContainEdgeAfterAddingEdgeAndInverse() throws Exception {
+        graph.addVertex(Unit.TSP);
+        graph.addVertex(Unit.TBSP);
         graph.addEdgeAndInverse(tspPerTbspFunction, Unit.TBSP, Unit.TSP);
         assertThat(graph.findEdge(Unit.TBSP, Unit.TSP).getConversion(), is(tspPerTbspFunction));
     }

@@ -13,4 +13,8 @@ public class UnitConversionGraph extends DirectedSparseMultigraph<Unit, Conversi
                                             (Double x) -> x / edge.apply((double) 1)),
                              vertex2, vertex1);
     }
+
+    public boolean addEdge(Function<Double, Double> edge, Unit vertex1, Unit vertex2) {
+        return super.addEdge(new Conversion(++edgeCount, edge), vertex1, vertex2);
+    }
 }
