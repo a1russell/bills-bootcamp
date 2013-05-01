@@ -13,8 +13,9 @@ public class Measurement implements MeasurementConverter {
         this.unit = unit;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public double convert(Unit desiredUnit) throws InvalidConversionException {
-        return quantity * unitConversions.convert(unit, desiredUnit);
+        return unitConversions.convert(unit, desiredUnit).apply((double) quantity);
     }
 }

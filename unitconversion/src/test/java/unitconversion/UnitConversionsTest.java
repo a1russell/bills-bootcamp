@@ -11,21 +11,21 @@ public class UnitConversionsTest {
 
     @Test
     public void shouldConvertTbspToTsp() throws Exception {
-        assertThat(conversions.convert(Unit.TBSP, Unit.TSP), is(3.0));
+        assertThat(conversions.convert(Unit.TBSP, Unit.TSP).apply((double) 1), is(3.0));
     }
 
     @Test
     public void shouldConvertCupToTsp() throws Exception {
-        assertThat(conversions.convert(Unit.CUP, Unit.TSP), is(48.0));
+        assertThat(conversions.convert(Unit.CUP, Unit.TSP).apply((double) 1), is(48.0));
     }
 
     @Test
     public void shouldConvertTbspToCup() throws Exception {
-        assertThat(conversions.convert(Unit.TBSP, Unit.CUP), closeTo(0.0625, 0.0001));
+        assertThat(conversions.convert(Unit.TBSP, Unit.CUP).apply((double) 1), closeTo(0.0625, 0.0001));
     }
 
     @Test
     public void shouldConvertTspToCup() throws Exception {
-        assertThat(conversions.convert(Unit.TSP, Unit.CUP), closeTo(0.020833, 0.000001));
+        assertThat(conversions.convert(Unit.TSP, Unit.CUP).apply((double) 1), closeTo(0.020833, 0.000001));
     }
 }

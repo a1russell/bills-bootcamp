@@ -18,10 +18,10 @@ public class UnitConversion {
         this.graph = graph;
     }
 
-    public double convert(Unit originalUnit, Unit desiredUnit) throws InvalidConversionException {
+    public Function<Double, Double> convert(Unit originalUnit, Unit desiredUnit) throws InvalidConversionException {
         Function<Double, Double> currentConversion = (Double x) -> x;
         if (originalUnit.equals(desiredUnit)) {
-            return currentConversion.apply((double) 1);
+            return currentConversion;
         }
         Collection<Unit> unitsVisited = newHashSet();
         unitsVisited.add(originalUnit);
@@ -29,7 +29,7 @@ public class UnitConversion {
         if (conversion.apply((double) 1) == 0) {
             throw new InvalidConversionException();
         }
-        return conversion.apply((double) 1);
+        return conversion;
     }
 
     private Function<Double, Double> convert(Unit originalUnit, Unit desiredUnit,

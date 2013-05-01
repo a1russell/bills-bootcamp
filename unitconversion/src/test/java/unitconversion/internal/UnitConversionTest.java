@@ -1,5 +1,6 @@
 package unitconversion.internal;
 
+import com.google.common.base.Function;
 import org.junit.Before;
 import org.junit.Test;
 import unitconversion.InvalidConversionException;
@@ -10,7 +11,7 @@ import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
 
 public class UnitConversionTest {
-    private UnitConversion conversion;
+    private UnitConversion unitConversion;
 
     @Before
     public void setUp() {
@@ -25,41 +26,41 @@ public class UnitConversionTest {
         graph.addEdgeAndInverse((Double x) -> 2 * x, Unit.FL_OZ, Unit.TBSP);
         graph.addEdgeAndInverse((Double x) -> 8 * x, Unit.CUP, Unit.FL_OZ);
 
-        conversion = new UnitConversion(graph);
+        unitConversion = new UnitConversion(graph);
     }
 
     @Test
     public void shouldReturnOneTspPerTsp() throws Exception {
-        double multiplier = conversion.convert(Unit.TSP, Unit.TSP);
-        assertThat(multiplier, is(1.0));
+        Function<Double, Double> conversionFn = unitConversion.convert(Unit.TSP, Unit.TSP);
+        assertThat(conversionFn.apply((double) 1), is(1.0));
     }
 
     @Test
     public void shouldReturnThreeTspPerTbsp() throws Exception {
-        double multiplier = conversion.convert(Unit.TBSP, Unit.TSP);
-        assertThat(multiplier, is(3.0));
+        Function<Double, Double> conversionFn = unitConversion.convert(Unit.TBSP, Unit.TSP);
+        assertThat(conversionFn.apply((double) 1), is(3.0));
     }
 
     @Test
     public void shouldReturnFortyEightTspPerCup() throws Exception {
-        double multiplier = conversion.convert(Unit.CUP, Unit.TSP);
-        assertThat(multiplier, is(48.0));
+        Function<Double, Double> conversionFn = unitConversion.convert(Unit.CUP, Unit.TSP);
+        assertThat(conversionFn.apply((double) 1), is(48.0));
     }
 
     @Test
     public void shouldReturnTwoTbspPerCup() throws Exception {
-        double multiplier = conversion.convert(Unit.CUP, Unit.TBSP);
-        assertThat(multiplier, is(16.0));
+        Function<Double, Double> conversionFn = unitConversion.convert(Unit.CUP, Unit.TBSP);
+        assertThat(conversionFn.apply((double) 1), is(16.0));
     }
 
     @Test
     public void shouldReturnOneSixthFlOzPerTsp() throws Exception {
-        double multiplier = conversion.convert(Unit.TSP, Unit.FL_OZ);
-        assertThat(multiplier, closeTo(0.1667, 0.0001));
+        Function<Double, Double> conversionFn = unitConversion.convert(Unit.TSP, Unit.FL_OZ);
+        assertThat(conversionFn.apply((double) 1), closeTo(0.1667, 0.0001));
     }
 
     @Test(expected=InvalidConversionException.class)
     public void shouldThrowExceptionWhenNoPathExistsBetweenRequestedVertices() throws Exception {
-        conversion.convert(Unit.TSP, Unit.FT);
+        unitConversion.convert(Unit.TSP, Unit.FT);
     }
 }

@@ -1,5 +1,6 @@
 package unitconversion;
 
+import com.google.common.base.Function;
 import unitconversion.internal.UnitConversion;
 import unitconversion.internal.UnitConversionGraph;
 
@@ -22,7 +23,7 @@ public class UnitConversions {
         graph.addEdgeAndInverse((Double x) -> 3 * x, Unit.YD, Unit.FT);
     }
 
-    public double convert(Unit originalUnit, Unit desiredUnit) throws InvalidConversionException {
+    public Function<Double, Double> convert(Unit originalUnit, Unit desiredUnit) throws InvalidConversionException {
         UnitConversion conversion = new UnitConversion(graph);
         return conversion.convert(originalUnit, desiredUnit);
     }
