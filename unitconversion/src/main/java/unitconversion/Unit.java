@@ -7,5 +7,7 @@ public enum Unit {
     CUP,
     IN,
     FT,
-    YD
+    YD,
+    CELSIUS,
+    FAHRENHEIT
 }
