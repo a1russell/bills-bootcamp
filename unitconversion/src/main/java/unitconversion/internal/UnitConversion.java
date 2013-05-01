@@ -1,5 +1,7 @@
 package unitconversion.internal;
 
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import unitconversion.InvalidConversionException;
 import unitconversion.Unit;
 
@@ -7,6 +9,7 @@ import java.util.Collection;
 
 import static com.google.common.collect.Sets.newHashSet;
 
+@SuppressWarnings("ConstantConditions")
 public class UnitConversion {
     private UnitConversionGraph graph;
 
@@ -16,41 +19,42 @@ public class UnitConversion {
     }
 
     public double convert(Unit originalUnit, Unit desiredUnit) throws InvalidConversionException {
-        double currentMultiplier = 1;
+        Function<Double, Double> currentConversion = (Double x) -> x;
         if (originalUnit.equals(desiredUnit)) {
-            return currentMultiplier;
+            return currentConversion.apply((double) 1);
         }
         Collection<Unit> unitsVisited = newHashSet();
         unitsVisited.add(originalUnit);
-        double multiplier = convert(originalUnit, desiredUnit, currentMultiplier, unitsVisited);
-        if (multiplier == 0) {
+        Function<Double, Double> conversion = convert(originalUnit, desiredUnit, currentConversion, unitsVisited);
+        if (conversion.apply((double) 1) == 0) {
             throw new InvalidConversionException();
         }
-        return multiplier;
+        return conversion.apply((double) 1);
     }
 
-    private double convert(Unit originalUnit, Unit desiredUnit,
-                           double currentMultiplier, Collection<Unit> unitsVisited) {
-        double multiplier = 0;
+    private Function<Double, Double> convert(Unit originalUnit, Unit desiredUnit,
+                                             Function<Double, Double> currentConversion, Collection<Unit> unitsVisited) {
+        Function<Double, Double> conversion = (Double x) -> (double) 0;
         for (Unit currentUnit : graph.getNeighbors(originalUnit)) {
             if (unitsVisited.contains(currentUnit)) {
                 continue;
             }
             if (currentUnit.equals(desiredUnit)) {
-                return calculateCurrentMultiplier(currentMultiplier, originalUnit, currentUnit);
+                return calculateCurrentConversion(currentConversion, originalUnit, currentUnit);
             }
             unitsVisited.add(currentUnit);
-            multiplier = convert(currentUnit, desiredUnit,
-                                 calculateCurrentMultiplier(currentMultiplier, originalUnit, currentUnit),
+            conversion = convert(currentUnit, desiredUnit,
+                                 calculateCurrentConversion(currentConversion, originalUnit, currentUnit),
                                  unitsVisited);
-            if (multiplier != 0) {
+            if (conversion.apply((double) 1) != 0) {
                 break;
             }
         }
-        return multiplier;
+        return conversion;
     }
 
-    private double calculateCurrentMultiplier(double currentMultiplier, Unit originalUnit, Unit currentUnit) {
-        return graph.findEdge(originalUnit, currentUnit).getConversion().applyAsDouble(currentMultiplier);
+    private Function<Double, Double> calculateCurrentConversion(Function<Double, Double> currentConversion,
+                                                                Unit originalUnit, Unit currentUnit) {
+        return Functions.compose(graph.findEdge(originalUnit, currentUnit).getConversion(), currentConversion);
     }
 }

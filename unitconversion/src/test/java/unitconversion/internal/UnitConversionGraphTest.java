@@ -1,17 +1,16 @@
 package unitconversion.internal;
 
+import com.google.common.base.Function;
 import org.junit.Before;
 import org.junit.Test;
 import unitconversion.Unit;
-
-import java.util.function.DoubleUnaryOperator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class UnitConversionGraphTest {
     private UnitConversionGraph graph;
-    private final DoubleUnaryOperator tspPerTbspFunction = (double x) -> 3 * x;
+    private final Function<Double, Double> tspPerTbspFunction = (Double x) -> 3 * x;
 
     @Before
     public void setUp() {
@@ -32,7 +31,7 @@ public class UnitConversionGraphTest {
         graph.addVertex(Unit.TSP);
         graph.addVertex(Unit.TBSP);
         graph.addEdgeAndInverse(tspPerTbspFunction, Unit.TBSP, Unit.TSP);
-        assertThat(graph.findEdge(Unit.TSP, Unit.TBSP).getConversion().applyAsDouble(1), is(tbspPerTsp));
+        assertThat(graph.findEdge(Unit.TSP, Unit.TBSP).getConversion().apply(1.), is(tbspPerTsp));
     }
 
     @Test
@@ -41,6 +40,6 @@ public class UnitConversionGraphTest {
         graph.addVertex(Unit.TSP);
         graph.addVertex(Unit.TBSP);
         graph.addEdgeAndInverse(tspPerTbspFunction, Unit.TBSP, Unit.TSP);
-        assertThat(graph.findEdge(Unit.TSP, Unit.TBSP).getConversion().applyAsDouble(2), is(tbspPerTwoTsp));
+        assertThat(graph.findEdge(Unit.TSP, Unit.TBSP).getConversion().apply(2.), is(tbspPerTwoTsp));
     }
 }

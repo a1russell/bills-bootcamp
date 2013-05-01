@@ -11,15 +11,15 @@ public class UnitConversions {
         graph.addVertex(Unit.TBSP);
         graph.addVertex(Unit.CUP);
 
-        graph.addEdgeAndInverse((double x) -> 3 * x, Unit.TBSP, Unit.TSP);
-        graph.addEdgeAndInverse((double x) -> 16 * x, Unit.CUP, Unit.TBSP);
+        graph.addEdgeAndInverse((Double x) -> 3 * x, Unit.TBSP, Unit.TSP);
+        graph.addEdgeAndInverse((Double x) -> 16 * x, Unit.CUP, Unit.TBSP);
 
         graph.addVertex(Unit.IN);
         graph.addVertex(Unit.FT);
         graph.addVertex(Unit.YD);
 
-        graph.addEdgeAndInverse((double x) -> 12 * x, Unit.FT, Unit.IN);
-        graph.addEdgeAndInverse((double x) -> 3 * x, Unit.YD, Unit.FT);
+        graph.addEdgeAndInverse((Double x) -> 12 * x, Unit.FT, Unit.IN);
+        graph.addEdgeAndInverse((Double x) -> 3 * x, Unit.YD, Unit.FT);
     }
 
     public double convert(Unit originalUnit, Unit desiredUnit) throws InvalidConversionException {

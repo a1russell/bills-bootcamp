@@ -1,18 +1,18 @@
 package unitconversion.internal;
 
-import java.util.function.DoubleUnaryOperator;
+import com.google.common.base.Function;
 
 public class Conversion {
     private final int id;
-    private final DoubleUnaryOperator conversion;
+    private final Function<Double, Double> conversion;
 
-    public Conversion(int id, DoubleUnaryOperator conversion) {
+    public Conversion(int id, Function<Double, Double> conversion) {
         if (conversion == null) throw new NullPointerException("conversion");
         this.id = id;
         this.conversion = conversion;
     }
 
-    public DoubleUnaryOperator getConversion() {
+    public Function<Double, Double> getConversion() {
         return conversion;
     }
 
