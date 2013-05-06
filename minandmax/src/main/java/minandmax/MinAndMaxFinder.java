@@ -3,7 +3,6 @@ package minandmax;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public class MinAndMaxFinder<T extends Comparable<T>> {
     Collection<T> collection;
@@ -24,6 +23,12 @@ public class MinAndMaxFinder<T extends Comparable<T>> {
     }
 
     public T max() {
-        return ((List<T>) collection).get(0);
+        T max = null;
+        for (T element : collection) {
+            if (max == null || element.compareTo(max) > 0) {
+                max = element;
+            }
+        }
+        return max;
     }
 }
