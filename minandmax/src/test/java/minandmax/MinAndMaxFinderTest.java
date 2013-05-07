@@ -29,4 +29,16 @@ public class MinAndMaxFinderTest {
         MinAndMaxFinder<Integer> minAndMaxFinder = new MinAndMaxFinder<Integer>(1, 2, 3);
         assertThat(minAndMaxFinder.max(), is(3));
     }
+
+    @Test
+    public void findsMinimumWhenCollectionIsOfStrings() throws Exception {
+        MinAndMaxFinder<String> minAndMaxFinder = new MinAndMaxFinder<String>("A", "B", "C");
+        assertThat(minAndMaxFinder.min(), is("A"));
+    }
+
+    @Test
+    public void findsMaximumWhenCollectionIsOfStrings() throws Exception {
+        MinAndMaxFinder<String> minAndMaxFinder = new MinAndMaxFinder<String>("A", "B", "C");
+        assertThat(minAndMaxFinder.max(), is("C"));
+    }
 }
