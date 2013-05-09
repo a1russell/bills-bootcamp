@@ -47,4 +47,10 @@ public class MinAndMaxFinderTest {
         MinAndMaxFinder<Integer> minAndMaxFinder = new MinAndMaxFinder<Integer>(3);
         assertThat(minAndMaxFinder.maxBelow(4), is(3));
     }
+
+    @Test
+    public void findsMaximumIntegerBelowLimitInCollectionWhenItNotTheFirstElement() throws Exception {
+        MinAndMaxFinder<Integer> minAndMaxFinder = new MinAndMaxFinder<Integer>(1, 2, 3);
+        assertThat(minAndMaxFinder.maxBelow(3), is(2));
+    }
 }

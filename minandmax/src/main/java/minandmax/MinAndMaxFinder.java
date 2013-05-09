@@ -2,6 +2,7 @@ package minandmax;
 
 import minandmax.comparison.Comparison;
 import minandmax.comparison.GreaterThan;
+import minandmax.comparison.GreaterThanBelowLimit;
 import minandmax.comparison.LessThan;
 
 import java.util.ArrayList;
@@ -35,6 +36,6 @@ public class MinAndMaxFinder<T extends Comparable<T>> {
     }
 
     public T maxBelow(T limit) {
-        return ((ArrayList<T>) collection).get(0);
+        return compare(new GreaterThanBelowLimit<T>(limit));
     }
 }
