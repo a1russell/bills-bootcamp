@@ -7,8 +7,8 @@ import static org.junit.Assert.assertThat;
 
 public class MinAndMaxFinderTest {
     @Test
-    public void findsMinimumIntegerInCollectionWhenItIsTheFirstElement() throws Exception {
-        MinAndMaxFinder<Integer> minAndMaxFinder = new MinAndMaxFinder<Integer>(1, 2, 3);
+    public void findsMinimumIntegerInCollectionWhenItIsTheOnlyElement() throws Exception {
+        MinAndMaxFinder<Integer> minAndMaxFinder = new MinAndMaxFinder<Integer>(1);
         assertThat(minAndMaxFinder.min(), is(1));
     }
 
@@ -19,8 +19,8 @@ public class MinAndMaxFinderTest {
     }
 
     @Test
-    public void findsMaximumIntegerInCollectionWhenItIsTheFirstElement() throws Exception {
-        MinAndMaxFinder<Integer> minAndMaxFinder = new MinAndMaxFinder<Integer>(3, 2, 1);
+    public void findsMaximumIntegerInCollectionWhenItIsTheOnlyElement() throws Exception {
+        MinAndMaxFinder<Integer> minAndMaxFinder = new MinAndMaxFinder<Integer>(3);
         assertThat(minAndMaxFinder.max(), is(3));
     }
 
