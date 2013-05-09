@@ -33,4 +33,8 @@ public class MinAndMaxFinder<T extends Comparable<T>> {
     public T max() {
         return compare(new GreaterThan<T>());
     }
+
+    public T maxBelow(T limit) {
+        return ((ArrayList<T>) collection).get(0);
+    }
 }
