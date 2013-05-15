@@ -4,7 +4,7 @@ public class GreaterThanBelowLimit<T extends Comparable<T>> implements Compariso
 
     private T limit;
 
-    public GreaterThanBelowLimit(T limit) {
+    GreaterThanBelowLimit(T limit) {
         if (limit == null) throw new NullPointerException("limit");
         this.limit = limit;
     }

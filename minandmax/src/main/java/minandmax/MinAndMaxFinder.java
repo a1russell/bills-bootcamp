@@ -1,20 +1,27 @@
 package minandmax;
 
 import minandmax.comparison.Comparison;
-import minandmax.comparison.GreaterThan;
-import minandmax.comparison.GreaterThanBelowLimit;
-import minandmax.comparison.LessThan;
+import minandmax.comparison.GreaterThanBelowLimitFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
 public class MinAndMaxFinder<T extends Comparable<T>> {
-    Collection<T> collection;
+    private final Collection<T> collection;
+    private final Comparison<T> lessThan;
+    private final Comparison<T> greatherThan;
+    private final GreaterThanBelowLimitFactory<T> greaterThanBelowLimitFactory;
 
-    public MinAndMaxFinder(T... elements) {
-        collection = new ArrayList<T>();
+    MinAndMaxFinder(Comparison<T> lessThan,
+                    Comparison<T> greatherThan,
+                    GreaterThanBelowLimitFactory<T> greaterThanBelowLimitFactory,
+                    T... elements) {
+        this.collection = new ArrayList<T>(elements.length);
         Collections.addAll(this.collection, elements);
+        this.lessThan = lessThan;
+        this.greatherThan = greatherThan;
+        this.greaterThanBelowLimitFactory = greaterThanBelowLimitFactory;
     }
 
     public T compare(Comparison<T> comparison) {
@@ -28,14 +35,14 @@ public class MinAndMaxFinder<T extends Comparable<T>> {
     }
 
     public T min() {
-        return compare(new LessThan<T>());
+        return compare(lessThan);
     }
 
     public T max() {
-        return compare(new GreaterThan<T>());
+        return compare(greatherThan);
     }
 
     public T maxBelow(T limit) {
-        return compare(new GreaterThanBelowLimit<T>(limit));
+        return compare(greaterThanBelowLimitFactory.create(limit));
     }
 }
