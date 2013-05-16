@@ -1,5 +1,8 @@
 package minandmax;
 
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+import com.google.inject.name.Named;
 import minandmax.comparison.Comparison;
 import minandmax.comparison.GreaterThanBelowLimitFactory;
 
@@ -13,10 +16,11 @@ public class MinAndMaxFinder<T extends Comparable<T>> {
     private final Comparison<T> greatherThan;
     private final GreaterThanBelowLimitFactory<T> greaterThanBelowLimitFactory;
 
-    MinAndMaxFinder(Comparison<T> lessThan,
-                    Comparison<T> greatherThan,
+    @Inject
+    MinAndMaxFinder(@Named("Less Than") Comparison<T> lessThan,
+                    @Named("Greater Than") Comparison<T> greatherThan,
                     GreaterThanBelowLimitFactory<T> greaterThanBelowLimitFactory,
-                    T... elements) {
+                    @Assisted T... elements) {
         this.collection = new ArrayList<T>(elements.length);
         Collections.addAll(this.collection, elements);
         this.lessThan = lessThan;

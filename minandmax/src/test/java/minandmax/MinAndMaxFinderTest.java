@@ -2,6 +2,7 @@ package minandmax;
 
 import com.google.inject.Inject;
 import com.google.inject.TypeLiteral;
+import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 import minandmax.comparison.Comparison;
 import minandmax.comparison.GreaterThan;
@@ -31,19 +32,17 @@ public class MinAndMaxFinderTest {
             bind(new TypeLiteral<Comparison<Integer>>() {})
                 .annotatedWith(Names.named("Greater Than"))
                 .to(new TypeLiteral<GreaterThan<Integer>>() {});
-            bind(new TypeLiteral<GreaterThanBelowLimitFactory<Integer>>() {
-            });
-            bind(new TypeLiteral<MinAndMaxFinderFactory<Integer>>() {});
-
+            install(new FactoryModuleBuilder().build(new TypeLiteral<GreaterThanBelowLimitFactory<Integer>>() {}));
+            install(new FactoryModuleBuilder().build(new TypeLiteral<MinAndMaxFinderFactory<Integer>>() {}));
+            
             bind(new TypeLiteral<Comparison<String>>() {})
                 .annotatedWith(Names.named("Less Than"))
                 .to(new TypeLiteral<LessThan<String>>() {});
             bind(new TypeLiteral<Comparison<String>>() {})
                 .annotatedWith(Names.named("Greater Than"))
                 .to(new TypeLiteral<GreaterThan<String>>() {});
-            bind(new TypeLiteral<GreaterThanBelowLimitFactory<String>>() {
-            });
-            bind(new TypeLiteral<MinAndMaxFinderFactory<String>>() {});
+            install(new FactoryModuleBuilder().build(new TypeLiteral<GreaterThanBelowLimitFactory<String>>() {}));
+            install(new FactoryModuleBuilder().build(new TypeLiteral<MinAndMaxFinderFactory<String>>() {}));
         }
     }
 
