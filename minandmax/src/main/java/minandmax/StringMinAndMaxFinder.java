@@ -10,16 +10,16 @@ import minandmax.comparison.Comparison;
 public class StringMinAndMaxFinder {
     private final Comparer<String> comparer;
     private final Comparison<String> lessThan;
-    private final Comparison<String> greatherThan;
+    private final Comparison<String> greaterThan;
     
     @Inject
     StringMinAndMaxFinder(ComparerFactory<String> comparerFactory,
                           @Named("Less Than") Comparison<String> lessThan,
-                          @Named("Greater Than") Comparison<String> greatherThan,
+                          @Named("Greater Than") Comparison<String> greaterThan,
                           @Assisted String... elements) {
         this.comparer = comparerFactory.create(elements);
         this.lessThan = lessThan;
-        this.greatherThan = greatherThan;
+        this.greaterThan = greaterThan;
     }
 
     public String min() {
@@ -27,6 +27,6 @@ public class StringMinAndMaxFinder {
     }
 
     public String max() {
-        return comparer.compare(greatherThan);
+        return comparer.compare(greaterThan);
     }
 }
