@@ -28,6 +28,7 @@ public class StringMinAndMaxFinderTest {
             bind(new TypeLiteral<Comparison<String>>() {})
                 .annotatedWith(Names.named("Greater Than"))
                 .to(StringGreaterThan.class);
+            install(new FactoryModuleBuilder().build(new TypeLiteral<ComparerFactory<String>>() {}));
             install(new FactoryModuleBuilder().build(StringMinAndMaxFinderFactory.class));
         }
     }

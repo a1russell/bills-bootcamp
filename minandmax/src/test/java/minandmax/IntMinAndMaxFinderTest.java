@@ -29,6 +29,7 @@ public class IntMinAndMaxFinderTest {
             bind(new TypeLiteral<Comparison<Integer>>() {})
                 .annotatedWith(Names.named("Greater Than"))
                 .to(IntGreaterThan.class);
+            install(new FactoryModuleBuilder().build(new TypeLiteral<ComparerFactory<Integer>>() {}));
             install(new FactoryModuleBuilder().build(IntGreaterThanBelowLimitFactory.class));
             install(new FactoryModuleBuilder().build(IntMinAndMaxFinderFactory.class));
         }
