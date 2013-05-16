@@ -3,18 +3,17 @@ package minandmax.comparison;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public class GreaterThanBelowLimit<T extends Comparable<T>> implements Comparison<T> {
-
-    private T limit;
+public class IntGreaterThanBelowLimit implements Comparison<Integer> {
+    private Integer limit;
 
     @Inject
-    GreaterThanBelowLimit(@Assisted T limit) {
+    IntGreaterThanBelowLimit(@Assisted Integer limit) {
         if (limit == null) throw new NullPointerException("limit");
         this.limit = limit;
     }
 
     @Override
-    public boolean apply(T lhs, T rhs) {
+    public boolean apply(Integer lhs, Integer rhs) {
         return lhs.compareTo(limit) < 0 && lhs.compareTo(rhs) > 0;
     }
 }
