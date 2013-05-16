@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
+import minandmax.comparer.ComparerFactory;
 import minandmax.comparison.Comparison;
 import minandmax.comparison.IntGreaterThan;
 import minandmax.comparison.IntGreaterThanBelowLimitFactory;

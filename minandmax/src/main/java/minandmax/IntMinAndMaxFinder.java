@@ -3,6 +3,8 @@ package minandmax;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.name.Named;
+import minandmax.comparer.Comparer;
+import minandmax.comparer.ComparerFactory;
 import minandmax.comparison.Comparison;
 import minandmax.comparison.IntGreaterThanBelowLimitFactory;
 
