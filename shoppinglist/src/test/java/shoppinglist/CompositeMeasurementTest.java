@@ -11,13 +11,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(JukitoRunner.class)
-public class MeasurementTest {
+public class CompositeMeasurementTest {
     @Inject
-    MeasurementFactory measurementFactory;
+    CompositeMeasurementFactory measurementFactory;
 
     public static class Module extends JukitoModule {
         protected void configureTest() {
-            install(new FactoryModuleBuilder().build(MeasurementFactory.class));
+            install(new FactoryModuleBuilder().build(CompositeMeasurementFactory.class));
         }
     }
 
@@ -25,5 +25,12 @@ public class MeasurementTest {
     public void hasQuantityAndUnitInTextRepresentation() {
         Measurement measurement = measurementFactory.create(1, Unit.CUP);
         assertThat(measurement.getText(), is("1 cup"));
+    }
+
+    @Test
+    public void addsMeasurementWhenUnitIsDifferent() {
+        CompositeMeasurement measurement = measurementFactory.create(1, Unit.CUP);
+        measurement.add(2, Unit.TSP);
+        assertThat(measurement.getText(), is("1 cup, 2 tsp"));
     }
 }
