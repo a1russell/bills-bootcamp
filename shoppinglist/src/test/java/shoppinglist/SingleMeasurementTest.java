@@ -13,19 +13,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(JukitoRunner.class)
 public class SingleMeasurementTest {
     @Inject
-    MeasurementFactory measurementFactory;
+    SingleMeasurementFactory measurementFactory;
 
     public static class Module extends JukitoModule {
         protected void configureTest() {
-            install(new FactoryModuleBuilder().
-                    implement(Measurement.class, SingleMeasurement.class).
-                    build(MeasurementFactory.class));
+            install(new FactoryModuleBuilder().build(SingleMeasurementFactory.class));
         }
     }
 
     @Test
     public void hasQuantityAndUnitInTextRepresentation() {
-        Measurement measurement = measurementFactory.create(1, Unit.CUP);
+        SingleMeasurement measurement = measurementFactory.create(1, Unit.CUP);
         assertThat(measurement.getText(), is("1 cup"));
+    }
+
+    @Test
+    public void addsToQuantity() {
+        SingleMeasurement measurement = measurementFactory.create(1, Unit.CUP);
+        measurement.add(2);
+        assertThat(measurement.getText(), is("3 cup"));
     }
 }

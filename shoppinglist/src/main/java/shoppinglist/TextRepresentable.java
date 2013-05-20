@@ -1,5 +1,5 @@
 package shoppinglist;
 
-public interface Measurement {
+public interface TextRepresentable {
     String getText();
 }

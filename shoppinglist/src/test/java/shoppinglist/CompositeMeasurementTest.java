@@ -17,13 +17,14 @@ public class CompositeMeasurementTest {
 
     public static class Module extends JukitoModule {
         protected void configureTest() {
+            install(new FactoryModuleBuilder().build(SingleMeasurementFactory.class));
             install(new FactoryModuleBuilder().build(CompositeMeasurementFactory.class));
         }
     }
 
     @Test
     public void hasQuantityAndUnitInTextRepresentation() {
-        Measurement measurement = measurementFactory.create(1, Unit.CUP);
+        CompositeMeasurement measurement = measurementFactory.create(1, Unit.CUP);
         assertThat(measurement.getText(), is("1 cup"));
     }
 
@@ -32,5 +33,12 @@ public class CompositeMeasurementTest {
         CompositeMeasurement measurement = measurementFactory.create(1, Unit.CUP);
         measurement.add(2, Unit.TSP);
         assertThat(measurement.getText(), is("1 cup, 2 tsp"));
+    }
+
+    @Test
+    public void addsAndCoalescesMeasurementWhenUnitsAreTheSame() {
+        CompositeMeasurement measurement = measurementFactory.create(1, Unit.CUP);
+        measurement.add(2, Unit.CUP);
+        assertThat(measurement.getText(), is("3 cup"));
     }
 }

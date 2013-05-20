@@ -24,6 +24,7 @@ dependencies {
     def guiceVersion = '3.+'
     compile "com.google.inject:guice:${guiceVersion}"
     compile "com.google.inject.extensions:guice-assistedinject:${guiceVersion}"
+    compile 'com.google.guava:guava:14.0.+'
     testCompile 'org.jukito:jukito:1.+'
     testCompile 'junit:junit:4.+'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
