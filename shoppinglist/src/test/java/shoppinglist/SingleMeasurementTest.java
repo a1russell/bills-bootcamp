@@ -27,10 +27,18 @@ public class SingleMeasurementTest {
         assertThat(measurement.getText(), is("1 cup"));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotAddMeasurementOfAnotherUnit() {
+        SingleMeasurement baseMeasurement = measurementFactory.create(1, Unit.CUP);
+        SingleMeasurement measurementToAdd = measurementFactory.create(2, Unit.FL_OZ);
+        baseMeasurement.addSingleMeasurement(measurementToAdd);
+    }
+
     @Test
     public void addsToQuantity() {
-        SingleMeasurement measurement = measurementFactory.create(1, Unit.CUP);
-        measurement.add(2);
-        assertThat(measurement.getText(), is("3 cup"));
+        SingleMeasurement baseMeasurement = measurementFactory.create(1, Unit.CUP);
+        SingleMeasurement measurementToAdd = measurementFactory.create(2, Unit.CUP);
+        baseMeasurement.addSingleMeasurement(measurementToAdd);
+        assertThat(baseMeasurement.getText(), is("3 cup"));
     }
 }

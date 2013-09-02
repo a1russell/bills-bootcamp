@@ -9,11 +9,19 @@ import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIn.isOneOf;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(JukitoRunner.class)
 public class CompositeMeasurementTest {
     @Inject
-    CompositeMeasurementFactory measurementFactory;
+    CompositeMeasurementFactory compositeMeasurementFactory;
+
+    @Inject
+    SingleMeasurementFactory singleMeasurementFactory;
 
     public static class Module extends JukitoModule {
         protected void configureTest() {
@@ -24,21 +32,62 @@ public class CompositeMeasurementTest {
 
     @Test
     public void hasQuantityAndUnitInTextRepresentation() {
-        CompositeMeasurement measurement = measurementFactory.create(1, Unit.CUP);
+        CompositeMeasurement measurement = compositeMeasurementFactory.create(1, Unit.CUP);
         assertThat(measurement.getText(), is("1 cup"));
     }
 
     @Test
     public void addsMeasurementWhenUnitIsDifferent() {
-        CompositeMeasurement measurement = measurementFactory.create(1, Unit.CUP);
-        measurement.add(2, Unit.TSP);
-        assertThat(measurement.getText(), is("1 cup, 2 tsp"));
+        CompositeMeasurement compositeMeasurement = compositeMeasurementFactory.create(1, Unit.CUP);
+        SingleMeasurement singleMeasurement = singleMeasurementFactory.create(2, Unit.TSP);
+
+        compositeMeasurement.addSingleMeasurement(singleMeasurement);
+
+        assertThat(compositeMeasurement.getText(), isOneOf("1 cup, 2 tsp", "2 tsp, 1 cup"));
     }
 
     @Test
     public void addsAndCoalescesMeasurementWhenUnitsAreTheSame() {
-        CompositeMeasurement measurement = measurementFactory.create(1, Unit.CUP);
-        measurement.add(2, Unit.CUP);
-        assertThat(measurement.getText(), is("3 cup"));
+        CompositeMeasurement compositeMeasurement = compositeMeasurementFactory.create(1, Unit.CUP);
+        SingleMeasurement singleMeasurement = singleMeasurementFactory.create(2, Unit.CUP);
+
+        compositeMeasurement.addSingleMeasurement(singleMeasurement);
+
+        assertThat(compositeMeasurement.getText(), is("3 cup"));
+    }
+
+    @Test
+    public void addsFirstSingleMeasurementOfCompositeWhenThereIsOnlyOne() {
+        CompositeMeasurement baseMeasurement = spy(compositeMeasurementFactory.create(1, Unit.CUP));
+        CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, Unit.TSP);
+        SingleMeasurement singleMeasurementToAdd = compositeMeasurementToAdd.measurements.iterator().next();
+
+        baseMeasurement.addCompositeMeasurement(compositeMeasurementToAdd);
+
+        verify(baseMeasurement).addSingleMeasurement(singleMeasurementToAdd);
+    }
+
+    @Test
+    public void addsLastSingleMeasurementOfCompositeWhenThereAreTwo() {
+        CompositeMeasurement baseMeasurement = spy(compositeMeasurementFactory.create(1, Unit.CUP));
+        CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, Unit.TSP);
+        compositeMeasurementToAdd.addSingleMeasurement(singleMeasurementFactory.create(3, Unit.FL_OZ));
+        SingleMeasurement[] singleMeasurementArray = new SingleMeasurement[compositeMeasurementToAdd.measurements.size()];
+        SingleMeasurement lastSingleMeasurementToAdd = compositeMeasurementToAdd.measurements.toArray(singleMeasurementArray)[1];
+
+        baseMeasurement.addCompositeMeasurement(compositeMeasurementToAdd);
+
+        verify(baseMeasurement).addSingleMeasurement(lastSingleMeasurementToAdd);
+    }
+
+    @Test
+    public void addsTwoSingleMeasurementsWhenThereAreTwoInComposite() {
+        CompositeMeasurement baseMeasurement = spy(compositeMeasurementFactory.create(1, Unit.CUP));
+        CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, Unit.TSP);
+        compositeMeasurementToAdd.addSingleMeasurement(singleMeasurementFactory.create(3, Unit.FL_OZ));
+
+        baseMeasurement.addCompositeMeasurement(compositeMeasurementToAdd);
+
+        verify(baseMeasurement, times(2)).addSingleMeasurement(any(SingleMeasurement.class));
     }
 }

@@ -7,10 +7,9 @@ import lombok.Getter;
 
 import java.text.DecimalFormat;
 
-@Getter(AccessLevel.PACKAGE)
 public class SingleMeasurement implements TextRepresentable {
     private double quantity;
-    private Unit unit;
+    @Getter(AccessLevel.PACKAGE) private Unit unit;
 
     @Inject
     SingleMeasurement(@Assisted double quantity, @Assisted Unit unit) {
@@ -25,7 +24,8 @@ public class SingleMeasurement implements TextRepresentable {
         return formattedQuantity + " " + unit.getText();
     }
 
-    public void add(double quantity) {
-        this.quantity += quantity;
+    public void addSingleMeasurement(SingleMeasurement that) {
+        if (!this.unit.equals(that.unit)) { throw new IllegalArgumentException(); }
+        this.quantity += that.quantity;
     }
 }

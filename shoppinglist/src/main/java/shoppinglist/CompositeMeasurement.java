@@ -6,7 +6,7 @@ import com.google.inject.assistedinject.Assisted;
 
 import java.util.Collection;
 
-import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
 
 public class CompositeMeasurement implements TextRepresentable {
     Collection<SingleMeasurement> measurements;
@@ -18,8 +18,8 @@ public class CompositeMeasurement implements TextRepresentable {
     CompositeMeasurement(SingleMeasurementFactory singleMeasurementFactory,
                          @Assisted double quantity, @Assisted Unit unit) {
         this.singleMeasurementFactory = singleMeasurementFactory;
-        this.measurements = newArrayList();
-        add(quantity, unit);
+        this.measurements = newHashSet();
+        addSingleMeasurement(this.singleMeasurementFactory.create(quantity, unit));
     }
 
     @Override
@@ -32,13 +32,18 @@ public class CompositeMeasurement implements TextRepresentable {
         return text.substring(0, text.length() - separator.length());
     }
 
-    public void add(double quantity, Unit unit) {
-        SingleMeasurement measurement = singleMeasurementFactory.create(quantity, unit);
-        Optional<SingleMeasurement> existingMeasurement = findMeasurementWithUnit(unit);
+    public void addSingleMeasurement(SingleMeasurement singleMeasurement) {
+        Optional<SingleMeasurement> existingMeasurement = findMeasurementWithUnit(singleMeasurement.getUnit());
         if (existingMeasurement.isPresent()) {
-            existingMeasurement.get().add(quantity);
+            existingMeasurement.get().addSingleMeasurement(singleMeasurement);
         } else {
-            measurements.add(measurement);
+            measurements.add(singleMeasurement);
+        }
+    }
+
+    public void addCompositeMeasurement(CompositeMeasurement that) {
+        for (SingleMeasurement measurement : that.measurements) {
+            addSingleMeasurement(measurement);
         }
     }
 
