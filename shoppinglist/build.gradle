@@ -21,7 +21,7 @@ idea {
 
 dependencies {
     provided group: 'org.projectlombok', name: 'lombok', version: '0.11.+'
-    def guiceVersion = '3.+'
+    def guiceVersion = '3.0'
     compile "com.google.inject:guice:${guiceVersion}"
     compile "com.google.inject.extensions:guice-assistedinject:${guiceVersion}"
     compile 'com.google.guava:guava:14.0.+'
