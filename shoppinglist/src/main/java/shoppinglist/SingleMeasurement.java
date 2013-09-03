@@ -24,7 +24,7 @@ public class SingleMeasurement implements TextRepresentable {
         return String.format("%s %s", formattedQuantity, unit);
     }
 
-    public void addSingleMeasurement(SingleMeasurement that) {
+    public void add(SingleMeasurement that) {
         if (!this.unit.equals(that.unit)) { throw new IllegalArgumentException(); }
         this.quantity += that.quantity;
     }

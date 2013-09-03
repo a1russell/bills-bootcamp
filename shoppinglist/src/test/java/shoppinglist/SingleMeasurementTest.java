@@ -31,7 +31,7 @@ public class SingleMeasurementTest {
     public void shouldNotAddMeasurementOfAnotherUnit() {
         SingleMeasurement baseMeasurement = measurementFactory.create(1, "cup");
         SingleMeasurement measurementToAdd = measurementFactory.create(2, "fl oz");
-        baseMeasurement.addSingleMeasurement(measurementToAdd);
+        baseMeasurement.add(measurementToAdd);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class SingleMeasurementTest {
         String unit = "cup";
         SingleMeasurement baseMeasurement = measurementFactory.create(1, unit);
         SingleMeasurement measurementToAdd = measurementFactory.create(2, unit);
-        baseMeasurement.addSingleMeasurement(measurementToAdd);
+        baseMeasurement.add(measurementToAdd);
         assertThat(baseMeasurement.getText(), is("3 cup"));
     }
 }

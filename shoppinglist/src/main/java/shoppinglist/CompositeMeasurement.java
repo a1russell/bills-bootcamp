@@ -35,7 +35,7 @@ public class CompositeMeasurement implements TextRepresentable {
     public void add(SingleMeasurement singleMeasurement) {
         Optional<SingleMeasurement> existingMeasurement = findMeasurementWithUnit(singleMeasurement.getUnit());
         if (existingMeasurement.isPresent()) {
-            existingMeasurement.get().addSingleMeasurement(singleMeasurement);
+            existingMeasurement.get().add(singleMeasurement);
         } else {
             measurements.add(singleMeasurement);
         }
