@@ -16,7 +16,7 @@ public class CompositeMeasurement implements TextRepresentable {
 
     @Inject
     CompositeMeasurement(SingleMeasurementFactory singleMeasurementFactory,
-                         @Assisted double quantity, @Assisted Unit unit) {
+                         @Assisted double quantity, @Assisted String unit) {
         this.singleMeasurementFactory = singleMeasurementFactory;
         this.measurements = newHashSet();
         addSingleMeasurement(this.singleMeasurementFactory.create(quantity, unit));
@@ -47,9 +47,9 @@ public class CompositeMeasurement implements TextRepresentable {
         }
     }
 
-    private Optional<SingleMeasurement> findMeasurementWithUnit(Unit unit) {
+    private Optional<SingleMeasurement> findMeasurementWithUnit(String unit) {
         for (SingleMeasurement measurement : measurements) {
-            if (unit == measurement.getUnit()) {
+            if (unit.equals(measurement.getUnit())) {
                 return Optional.of(measurement);
             }
         }

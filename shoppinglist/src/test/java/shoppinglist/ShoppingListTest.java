@@ -37,7 +37,7 @@ public class ShoppingListTest {
 
     @Test
     public void hasMeasurementAndProductInTextRepresentation() {
-        CompositeMeasurement measurement = measurementFactory.create(1, Unit.CUP);
+        CompositeMeasurement measurement = measurementFactory.create(1, "cup");
         ShoppingListItem item = itemFactory.create(measurement, "sugar");
 
         shoppingList.add(item);
@@ -47,9 +47,9 @@ public class ShoppingListTest {
 
     @Test
     public void addsItemWhenProductIsDifferent() {
-        CompositeMeasurement oneCup = measurementFactory.create(1, Unit.CUP);
+        CompositeMeasurement oneCup = measurementFactory.create(1, "cup");
         ShoppingListItem cupOfSugar = itemFactory.create(oneCup, "sugar");
-        CompositeMeasurement twoTsp = measurementFactory.create(2, Unit.TSP);
+        CompositeMeasurement twoTsp = measurementFactory.create(2, "tsp");
         ShoppingListItem tspOfFlour = itemFactory.create(twoTsp, "flour");
 
         shoppingList.add(cupOfSugar);
@@ -63,9 +63,9 @@ public class ShoppingListTest {
     @Test
     public void addsAndCoalescesItemWhenProductsAreTheSame() {
         String product = "sugar";
-        CompositeMeasurement oneCup = measurementFactory.create(1, Unit.CUP);
+        CompositeMeasurement oneCup = measurementFactory.create(1, "cup");
         ShoppingListItem cupOfSugar = itemFactory.create(oneCup, product);
-        CompositeMeasurement twoCups = measurementFactory.create(2, Unit.CUP);
+        CompositeMeasurement twoCups = measurementFactory.create(2, "cup");
         ShoppingListItem twoCupsSugar = itemFactory.create(twoCups, product);
 
         shoppingList.add(cupOfSugar);

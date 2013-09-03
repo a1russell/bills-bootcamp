@@ -9,10 +9,10 @@ import java.text.DecimalFormat;
 
 public class SingleMeasurement implements TextRepresentable {
     private double quantity;
-    @Getter(AccessLevel.PACKAGE) private Unit unit;
+    @Getter(AccessLevel.PACKAGE) private String unit;
 
     @Inject
-    SingleMeasurement(@Assisted double quantity, @Assisted Unit unit) {
+    SingleMeasurement(@Assisted double quantity, @Assisted String unit) {
         this.quantity = quantity;
         this.unit = unit;
     }
@@ -21,7 +21,7 @@ public class SingleMeasurement implements TextRepresentable {
     public String getText() {
         DecimalFormat formatter = new DecimalFormat("#.#");
         String formattedQuantity = formatter.format(this.quantity);
-        return formattedQuantity + " " + unit.getText();
+        return String.format("%s %s", formattedQuantity, unit);
     }
 
     public void addSingleMeasurement(SingleMeasurement that) {

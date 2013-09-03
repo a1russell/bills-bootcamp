@@ -1,5 +1,5 @@
 package shoppinglist;
 
 public interface SingleMeasurementFactory {
-    SingleMeasurement create(double quantity, Unit unit);
+    SingleMeasurement create(double quantity, String unit);
 }

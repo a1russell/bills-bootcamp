@@ -28,14 +28,14 @@ public class ShoppingListItemTest {
 
     @Test
     public void hasMeasurementAndProductInTextRepresentation() {
-        CompositeMeasurement measurement = measurementFactory.create(1, Unit.CUP);
+        CompositeMeasurement measurement = measurementFactory.create(1, "cup");
         ShoppingListItem item = itemFactory.create(measurement, "sugar");
         assertThat(item.getText(), is("1 cup sugar"));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotAddItemOfAnotherProduct() {
-        CompositeMeasurement measurement = measurementFactory.create(1, Unit.CUP);
+        CompositeMeasurement measurement = measurementFactory.create(1, "cup");
         ShoppingListItem baseItem = itemFactory.create(measurement, "sugar");
         ShoppingListItem itemToAdd = itemFactory.create(measurement, "flour");
         baseItem.add(itemToAdd);
@@ -44,9 +44,9 @@ public class ShoppingListItemTest {
     @Test
     public void addsToMeasurement() {
         String product = "sugar";
-        CompositeMeasurement baseMeasurement = measurementFactory.create(1, Unit.CUP);
+        CompositeMeasurement baseMeasurement = measurementFactory.create(1, "cup");
         ShoppingListItem baseItem = itemFactory.create(baseMeasurement, product);
-        CompositeMeasurement measurementToAdd = measurementFactory.create(2, Unit.CUP);
+        CompositeMeasurement measurementToAdd = measurementFactory.create(2, "cup");
         ShoppingListItem itemToAdd = itemFactory.create(measurementToAdd, product);
 
         baseItem.add(itemToAdd);

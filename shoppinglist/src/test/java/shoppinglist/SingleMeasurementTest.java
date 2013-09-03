@@ -23,21 +23,22 @@ public class SingleMeasurementTest {
 
     @Test
     public void hasQuantityAndUnitInTextRepresentation() {
-        SingleMeasurement measurement = measurementFactory.create(1, Unit.CUP);
+        SingleMeasurement measurement = measurementFactory.create(1, "cup");
         assertThat(measurement.getText(), is("1 cup"));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotAddMeasurementOfAnotherUnit() {
-        SingleMeasurement baseMeasurement = measurementFactory.create(1, Unit.CUP);
-        SingleMeasurement measurementToAdd = measurementFactory.create(2, Unit.FL_OZ);
+        SingleMeasurement baseMeasurement = measurementFactory.create(1, "cup");
+        SingleMeasurement measurementToAdd = measurementFactory.create(2, "fl oz");
         baseMeasurement.addSingleMeasurement(measurementToAdd);
     }
 
     @Test
     public void addsToQuantity() {
-        SingleMeasurement baseMeasurement = measurementFactory.create(1, Unit.CUP);
-        SingleMeasurement measurementToAdd = measurementFactory.create(2, Unit.CUP);
+        String unit = "cup";
+        SingleMeasurement baseMeasurement = measurementFactory.create(1, unit);
+        SingleMeasurement measurementToAdd = measurementFactory.create(2, unit);
         baseMeasurement.addSingleMeasurement(measurementToAdd);
         assertThat(baseMeasurement.getText(), is("3 cup"));
     }

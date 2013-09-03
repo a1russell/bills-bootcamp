@@ -32,14 +32,14 @@ public class CompositeMeasurementTest {
 
     @Test
     public void hasQuantityAndUnitInTextRepresentation() {
-        CompositeMeasurement measurement = compositeMeasurementFactory.create(1, Unit.CUP);
+        CompositeMeasurement measurement = compositeMeasurementFactory.create(1, "cup");
         assertThat(measurement.getText(), is("1 cup"));
     }
 
     @Test
     public void addsMeasurementWhenUnitIsDifferent() {
-        CompositeMeasurement compositeMeasurement = compositeMeasurementFactory.create(1, Unit.CUP);
-        SingleMeasurement singleMeasurement = singleMeasurementFactory.create(2, Unit.TSP);
+        CompositeMeasurement compositeMeasurement = compositeMeasurementFactory.create(1, "cup");
+        SingleMeasurement singleMeasurement = singleMeasurementFactory.create(2, "tsp");
 
         compositeMeasurement.addSingleMeasurement(singleMeasurement);
 
@@ -48,8 +48,9 @@ public class CompositeMeasurementTest {
 
     @Test
     public void addsAndCoalescesMeasurementWhenUnitsAreTheSame() {
-        CompositeMeasurement compositeMeasurement = compositeMeasurementFactory.create(1, Unit.CUP);
-        SingleMeasurement singleMeasurement = singleMeasurementFactory.create(2, Unit.CUP);
+        String unit = "cup";
+        CompositeMeasurement compositeMeasurement = compositeMeasurementFactory.create(1, unit);
+        SingleMeasurement singleMeasurement = singleMeasurementFactory.create(2, unit);
 
         compositeMeasurement.addSingleMeasurement(singleMeasurement);
 
@@ -58,8 +59,8 @@ public class CompositeMeasurementTest {
 
     @Test
     public void addsFirstSingleMeasurementOfCompositeWhenThereIsOnlyOne() {
-        CompositeMeasurement baseMeasurement = spy(compositeMeasurementFactory.create(1, Unit.CUP));
-        CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, Unit.TSP);
+        CompositeMeasurement baseMeasurement = spy(compositeMeasurementFactory.create(1, "cup"));
+        CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, "tsp");
         SingleMeasurement singleMeasurementToAdd = compositeMeasurementToAdd.measurements.iterator().next();
 
         baseMeasurement.addCompositeMeasurement(compositeMeasurementToAdd);
@@ -69,9 +70,9 @@ public class CompositeMeasurementTest {
 
     @Test
     public void addsLastSingleMeasurementOfCompositeWhenThereAreTwo() {
-        CompositeMeasurement baseMeasurement = spy(compositeMeasurementFactory.create(1, Unit.CUP));
-        CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, Unit.TSP);
-        compositeMeasurementToAdd.addSingleMeasurement(singleMeasurementFactory.create(3, Unit.FL_OZ));
+        CompositeMeasurement baseMeasurement = spy(compositeMeasurementFactory.create(1, "cup"));
+        CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, "tsp");
+        compositeMeasurementToAdd.addSingleMeasurement(singleMeasurementFactory.create(3, "fl oz"));
         SingleMeasurement[] singleMeasurementArray = new SingleMeasurement[compositeMeasurementToAdd.measurements.size()];
         SingleMeasurement lastSingleMeasurementToAdd = compositeMeasurementToAdd.measurements.toArray(singleMeasurementArray)[1];
 
@@ -82,9 +83,9 @@ public class CompositeMeasurementTest {
 
     @Test
     public void addsTwoSingleMeasurementsWhenThereAreTwoInComposite() {
-        CompositeMeasurement baseMeasurement = spy(compositeMeasurementFactory.create(1, Unit.CUP));
-        CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, Unit.TSP);
-        compositeMeasurementToAdd.addSingleMeasurement(singleMeasurementFactory.create(3, Unit.FL_OZ));
+        CompositeMeasurement baseMeasurement = spy(compositeMeasurementFactory.create(1, "cup"));
+        CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, "tsp");
+        compositeMeasurementToAdd.addSingleMeasurement(singleMeasurementFactory.create(3, "fl oz"));
 
         baseMeasurement.addCompositeMeasurement(compositeMeasurementToAdd);
 

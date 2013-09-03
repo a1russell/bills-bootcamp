@@ -1,5 +1,5 @@
 package shoppinglist;
 
 public interface CompositeMeasurementFactory {
-    CompositeMeasurement create(double quantity, Unit unit);
+    CompositeMeasurement create(double quantity, String unit);
 }
