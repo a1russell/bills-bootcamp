@@ -1,13 +1,17 @@
 package shoppinglist;
 
-import com.google.common.base.Optional;
-
 import java.util.Collection;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 public class ShoppingList implements TextRepresentable {
-    Collection<ShoppingListItem> shoppingListItems = newArrayList();
+    private final ElementToCollectionAdder<ShoppingListItem, String, CompositeMeasurement> adder;
+    private final Collection<ShoppingListItem> shoppingListItems;
+
+    public ShoppingList() {
+        adder = new ElementToCollectionAdder<ShoppingListItem, String, CompositeMeasurement>();
+        shoppingListItems = newArrayList();
+    }
 
     @Override
     public String getText() {
@@ -20,20 +24,6 @@ public class ShoppingList implements TextRepresentable {
     }
 
     public void add(ShoppingListItem shoppingListItem) {
-        Optional<ShoppingListItem> existingItem = findItemWithProduct(shoppingListItem.getProduct());
-        if (existingItem.isPresent()) {
-            existingItem.get().add(shoppingListItem);
-        } else {
-            shoppingListItems.add(shoppingListItem);
-        }
-    }
-
-    private Optional<ShoppingListItem> findItemWithProduct(String product) {
-        for (ShoppingListItem shoppingListItem : shoppingListItems) {
-            if (product.equals(shoppingListItem.getProduct())) {
-                return Optional.of(shoppingListItem);
-            }
-        }
-        return Optional.absent();
+        adder.add(shoppingListItem, shoppingListItems);
     }
 }

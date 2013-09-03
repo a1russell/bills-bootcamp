@@ -2,14 +2,12 @@ package shoppinglist;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import lombok.AccessLevel;
-import lombok.Getter;
 
 import java.text.DecimalFormat;
 
-public class SingleMeasurement implements TextRepresentable {
+public class SingleMeasurement implements TextRepresentable, Mergeable<String, Double> {
     private double quantity;
-    @Getter(AccessLevel.PACKAGE) private String unit;
+    private String unit;
 
     @Inject
     SingleMeasurement(@Assisted double quantity, @Assisted String unit) {
@@ -24,8 +22,19 @@ public class SingleMeasurement implements TextRepresentable {
         return String.format("%s %s", formattedQuantity, unit);
     }
 
-    public void add(SingleMeasurement that) {
-        if (!this.unit.equals(that.unit)) { throw new IllegalArgumentException(); }
-        this.quantity += that.quantity;
+    @Override
+    public String getMergeKey() {
+        return unit;
+    }
+
+    @Override
+    public Double getMergeValue() {
+        return quantity;
+    }
+
+    @Override
+    public void add(Mergeable<String, Double> that) {
+        if (!this.getMergeKey().equals(that.getMergeKey())) { throw new IllegalArgumentException(); }
+        this.quantity += that.getMergeValue();
     }
 }

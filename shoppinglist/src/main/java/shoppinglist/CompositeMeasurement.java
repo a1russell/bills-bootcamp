@@ -1,6 +1,5 @@
 package shoppinglist;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
@@ -9,6 +8,7 @@ import java.util.Collection;
 import static com.google.common.collect.Sets.newHashSet;
 
 public class CompositeMeasurement implements TextRepresentable {
+    private final ElementToCollectionAdder<SingleMeasurement, String, Double> adder;
     Collection<SingleMeasurement> measurements;
 
     @Inject
@@ -17,6 +17,7 @@ public class CompositeMeasurement implements TextRepresentable {
     @Inject
     CompositeMeasurement(SingleMeasurementFactory singleMeasurementFactory,
                          @Assisted double quantity, @Assisted String unit) {
+        this.adder = new ElementToCollectionAdder<SingleMeasurement, String, Double>();
         this.singleMeasurementFactory = singleMeasurementFactory;
         this.measurements = newHashSet();
         add(this.singleMeasurementFactory.create(quantity, unit));
@@ -33,26 +34,12 @@ public class CompositeMeasurement implements TextRepresentable {
     }
 
     public void add(SingleMeasurement singleMeasurement) {
-        Optional<SingleMeasurement> existingMeasurement = findMeasurementWithUnit(singleMeasurement.getUnit());
-        if (existingMeasurement.isPresent()) {
-            existingMeasurement.get().add(singleMeasurement);
-        } else {
-            measurements.add(singleMeasurement);
-        }
+        adder.add(singleMeasurement, measurements);
     }
 
     public void add(CompositeMeasurement that) {
         for (SingleMeasurement measurement : that.measurements) {
             add(measurement);
         }
-    }
-
-    private Optional<SingleMeasurement> findMeasurementWithUnit(String unit) {
-        for (SingleMeasurement measurement : measurements) {
-            if (unit.equals(measurement.getUnit())) {
-                return Optional.of(measurement);
-            }
-        }
-        return Optional.absent();
     }
 }
