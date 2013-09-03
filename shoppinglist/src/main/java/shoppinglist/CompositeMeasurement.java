@@ -26,7 +26,7 @@ public class CompositeMeasurement implements TextRepresentable {
     public String getText() {
         String text = "";
         String separator = ", ";
-        for (SingleMeasurement measurement : measurements) {
+        for (TextRepresentable measurement : measurements) {
             text += measurement.getText() + separator;
         }
         return text.substring(0, text.length() - separator.length());
