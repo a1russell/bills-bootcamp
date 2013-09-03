@@ -41,7 +41,7 @@ public class CompositeMeasurementTest {
         CompositeMeasurement compositeMeasurement = compositeMeasurementFactory.create(1, "cup");
         SingleMeasurement singleMeasurement = singleMeasurementFactory.create(2, "tsp");
 
-        compositeMeasurement.addSingleMeasurement(singleMeasurement);
+        compositeMeasurement.add(singleMeasurement);
 
         assertThat(compositeMeasurement.getText(), isOneOf("1 cup, 2 tsp", "2 tsp, 1 cup"));
     }
@@ -52,7 +52,7 @@ public class CompositeMeasurementTest {
         CompositeMeasurement compositeMeasurement = compositeMeasurementFactory.create(1, unit);
         SingleMeasurement singleMeasurement = singleMeasurementFactory.create(2, unit);
 
-        compositeMeasurement.addSingleMeasurement(singleMeasurement);
+        compositeMeasurement.add(singleMeasurement);
 
         assertThat(compositeMeasurement.getText(), is("3 cup"));
     }
@@ -63,32 +63,32 @@ public class CompositeMeasurementTest {
         CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, "tsp");
         SingleMeasurement singleMeasurementToAdd = compositeMeasurementToAdd.measurements.iterator().next();
 
-        baseMeasurement.addCompositeMeasurement(compositeMeasurementToAdd);
+        baseMeasurement.add(compositeMeasurementToAdd);
 
-        verify(baseMeasurement).addSingleMeasurement(singleMeasurementToAdd);
+        verify(baseMeasurement).add(singleMeasurementToAdd);
     }
 
     @Test
     public void addsLastSingleMeasurementOfCompositeWhenThereAreTwo() {
         CompositeMeasurement baseMeasurement = spy(compositeMeasurementFactory.create(1, "cup"));
         CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, "tsp");
-        compositeMeasurementToAdd.addSingleMeasurement(singleMeasurementFactory.create(3, "fl oz"));
+        compositeMeasurementToAdd.add(singleMeasurementFactory.create(3, "fl oz"));
         SingleMeasurement[] singleMeasurementArray = new SingleMeasurement[compositeMeasurementToAdd.measurements.size()];
         SingleMeasurement lastSingleMeasurementToAdd = compositeMeasurementToAdd.measurements.toArray(singleMeasurementArray)[1];
 
-        baseMeasurement.addCompositeMeasurement(compositeMeasurementToAdd);
+        baseMeasurement.add(compositeMeasurementToAdd);
 
-        verify(baseMeasurement).addSingleMeasurement(lastSingleMeasurementToAdd);
+        verify(baseMeasurement).add(lastSingleMeasurementToAdd);
     }
 
     @Test
     public void addsTwoSingleMeasurementsWhenThereAreTwoInComposite() {
         CompositeMeasurement baseMeasurement = spy(compositeMeasurementFactory.create(1, "cup"));
         CompositeMeasurement compositeMeasurementToAdd = compositeMeasurementFactory.create(2, "tsp");
-        compositeMeasurementToAdd.addSingleMeasurement(singleMeasurementFactory.create(3, "fl oz"));
+        compositeMeasurementToAdd.add(singleMeasurementFactory.create(3, "fl oz"));
 
-        baseMeasurement.addCompositeMeasurement(compositeMeasurementToAdd);
+        baseMeasurement.add(compositeMeasurementToAdd);
 
-        verify(baseMeasurement, times(2)).addSingleMeasurement(any(SingleMeasurement.class));
+        verify(baseMeasurement, times(2)).add(any(SingleMeasurement.class));
     }
 }

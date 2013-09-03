@@ -22,6 +22,6 @@ public class ShoppingListItem implements TextRepresentable {
 
     public void add(ShoppingListItem that) {
         if (!this.product.equals(that.product)) { throw new IllegalArgumentException(); }
-        this.measurement.addCompositeMeasurement(that.measurement);
+        this.measurement.add(that.measurement);
     }
 }

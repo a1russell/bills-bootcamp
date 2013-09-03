@@ -19,7 +19,7 @@ public class CompositeMeasurement implements TextRepresentable {
                          @Assisted double quantity, @Assisted String unit) {
         this.singleMeasurementFactory = singleMeasurementFactory;
         this.measurements = newHashSet();
-        addSingleMeasurement(this.singleMeasurementFactory.create(quantity, unit));
+        add(this.singleMeasurementFactory.create(quantity, unit));
     }
 
     @Override
@@ -32,7 +32,7 @@ public class CompositeMeasurement implements TextRepresentable {
         return text.substring(0, text.length() - separator.length());
     }
 
-    public void addSingleMeasurement(SingleMeasurement singleMeasurement) {
+    public void add(SingleMeasurement singleMeasurement) {
         Optional<SingleMeasurement> existingMeasurement = findMeasurementWithUnit(singleMeasurement.getUnit());
         if (existingMeasurement.isPresent()) {
             existingMeasurement.get().addSingleMeasurement(singleMeasurement);
@@ -41,9 +41,9 @@ public class CompositeMeasurement implements TextRepresentable {
         }
     }
 
-    public void addCompositeMeasurement(CompositeMeasurement that) {
+    public void add(CompositeMeasurement that) {
         for (SingleMeasurement measurement : that.measurements) {
-            addSingleMeasurement(measurement);
+            add(measurement);
         }
     }
 
