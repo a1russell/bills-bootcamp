@@ -8,11 +8,11 @@ import java.util.Collection;
 
 import static com.google.common.collect.Sets.newHashSet;
 
-public class CompositeMeasurement implements TextRepresentable {
+public class CompositeMeasurement implements TextRepresentable, Addable<CompositeMeasurement> {
     @VisibleForTesting
     Collection<SingleMeasurement> measurements;
 
-    private final ElementToCollectionAdder<SingleMeasurement, String, Double> elementToCollectionAdder;
+    private final ElementToCollectionAdder<SingleMeasurement, String, AddableDouble> elementToCollectionAdder;
     private final TextJoiner textJoiner;
 
     public interface Factory {
@@ -21,7 +21,7 @@ public class CompositeMeasurement implements TextRepresentable {
 
     @Inject
     private CompositeMeasurement(SingleMeasurement.Factory singleMeasurementFactory,
-                                 ElementToCollectionAdder<SingleMeasurement, String, Double> elementToCollectionAdder,
+                                 ElementToCollectionAdder<SingleMeasurement, String, AddableDouble> elementToCollectionAdder,
                                  TextJoiner textJoiner,
                                  @Assisted double quantity,
                                  @Assisted String unit) {
@@ -40,6 +40,7 @@ public class CompositeMeasurement implements TextRepresentable {
         elementToCollectionAdder.add(singleMeasurement, measurements);
     }
 
+    @Override
     public void add(CompositeMeasurement that) {
         for (SingleMeasurement measurement : that.measurements) {
             add(measurement);

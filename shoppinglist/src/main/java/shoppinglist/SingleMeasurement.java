@@ -5,9 +5,9 @@ import com.google.inject.assistedinject.Assisted;
 
 import java.text.DecimalFormat;
 
-public class SingleMeasurement implements TextRepresentable, Mergeable<String, Double> {
+public class SingleMeasurement implements TextRepresentable, Mergeable<String, AddableDouble> {
     private final String unit;
-    private double quantity;
+    private AddableDouble quantity;
 
     private final SpaceJoiner spaceJoiner;
 
@@ -18,14 +18,14 @@ public class SingleMeasurement implements TextRepresentable, Mergeable<String, D
     @Inject
     private SingleMeasurement(SpaceJoiner spaceJoiner, @Assisted double quantity, @Assisted String unit) {
         this.spaceJoiner = spaceJoiner;
-        this.quantity = quantity;
+        this.quantity = new AddableDouble(quantity);
         this.unit = unit;
     }
 
     @Override
     public String getText() {
         DecimalFormat formatter = new DecimalFormat("#.#");
-        String formattedQuantity = formatter.format(this.quantity);
+        String formattedQuantity = formatter.format(quantity.getValue());
         return spaceJoiner.join(formattedQuantity, unit);
     }
 
@@ -35,13 +35,13 @@ public class SingleMeasurement implements TextRepresentable, Mergeable<String, D
     }
 
     @Override
-    public Double getMergeValue() {
+    public AddableDouble getMergeValue() {
         return quantity;
     }
 
     @Override
-    public void add(Mergeable<String, Double> that) {
+    public void add(Mergeable<String, AddableDouble> that) {
         if (!this.getMergeKey().equals(that.getMergeKey())) { throw new IllegalArgumentException(); }
-        this.quantity += that.getMergeValue();
+        this.getMergeValue().add(that.getMergeValue());
     }
 }
