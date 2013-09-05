@@ -10,14 +10,19 @@ public class SingleMeasurement implements TextRepresentable, Mergeable<String, A
     private AddableDouble quantity;
 
     private final SpaceJoiner spaceJoiner;
+    private final MergeValueAdder<String, AddableDouble> mergeValueAdder;
 
     public interface Factory {
         SingleMeasurement create(double quantity, String unit);
     }
 
     @Inject
-    private SingleMeasurement(SpaceJoiner spaceJoiner, @Assisted double quantity, @Assisted String unit) {
+    private SingleMeasurement(SpaceJoiner spaceJoiner,
+                              MergeValueAdder<String, AddableDouble> mergeValueAdder,
+                              @Assisted double quantity,
+                              @Assisted String unit) {
         this.spaceJoiner = spaceJoiner;
+        this.mergeValueAdder = mergeValueAdder;
         this.quantity = new AddableDouble(quantity);
         this.unit = unit;
     }
@@ -41,7 +46,6 @@ public class SingleMeasurement implements TextRepresentable, Mergeable<String, A
 
     @Override
     public void add(Mergeable<String, AddableDouble> that) {
-        if (!this.getMergeKey().equals(that.getMergeKey())) { throw new IllegalArgumentException(); }
-        this.getMergeValue().add(that.getMergeValue());
+        mergeValueAdder.add(this, that);
     }
 }
