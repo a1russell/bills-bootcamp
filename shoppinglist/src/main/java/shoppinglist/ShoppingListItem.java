@@ -4,13 +4,20 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public class ShoppingListItem implements TextRepresentable, Mergeable<String, CompositeMeasurement> {
-    private final SpaceJoiner spaceJoiner;
+    private final String product;
     private CompositeMeasurement measurement;
-    private String product;
+
+    private final SpaceJoiner spaceJoiner;
+
+    public interface Factory {
+        ShoppingListItem create(CompositeMeasurement compositeMeasurement, String product);
+    }
 
     @Inject
-    ShoppingListItem(@Assisted CompositeMeasurement measurement, @Assisted String product) {
-        this.spaceJoiner = new SpaceJoiner();
+    private ShoppingListItem(SpaceJoiner spaceJoiner,
+                             @Assisted CompositeMeasurement measurement,
+                             @Assisted String product) {
+        this.spaceJoiner = spaceJoiner;
         this.measurement = measurement;
         this.product = product;
     }

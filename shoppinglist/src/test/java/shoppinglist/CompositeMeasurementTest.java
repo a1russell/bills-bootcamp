@@ -18,15 +18,15 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 @RunWith(JukitoRunner.class)
 public class CompositeMeasurementTest {
     @Inject
-    CompositeMeasurementFactory compositeMeasurementFactory;
+    CompositeMeasurement.Factory compositeMeasurementFactory;
 
     @Inject
-    SingleMeasurementFactory singleMeasurementFactory;
+    SingleMeasurement.Factory singleMeasurementFactory;
 
     public static class Module extends JukitoModule {
         protected void configureTest() {
-            install(new FactoryModuleBuilder().build(SingleMeasurementFactory.class));
-            install(new FactoryModuleBuilder().build(CompositeMeasurementFactory.class));
+            install(new FactoryModuleBuilder().build(SingleMeasurement.Factory.class));
+            install(new FactoryModuleBuilder().build(CompositeMeasurement.Factory.class));
         }
     }
 

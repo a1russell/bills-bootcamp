@@ -6,13 +6,18 @@ import com.google.inject.assistedinject.Assisted;
 import java.text.DecimalFormat;
 
 public class SingleMeasurement implements TextRepresentable, Mergeable<String, Double> {
-    private final SpaceJoiner spaceJoiner;
+    private final String unit;
     private double quantity;
-    private String unit;
+
+    private final SpaceJoiner spaceJoiner;
+
+    public interface Factory {
+        SingleMeasurement create(double quantity, String unit);
+    }
 
     @Inject
-    SingleMeasurement(@Assisted double quantity, @Assisted String unit) {
-        this.spaceJoiner = new SpaceJoiner();
+    private SingleMeasurement(SpaceJoiner spaceJoiner, @Assisted double quantity, @Assisted String unit) {
+        this.spaceJoiner = spaceJoiner;
         this.quantity = quantity;
         this.unit = unit;
     }

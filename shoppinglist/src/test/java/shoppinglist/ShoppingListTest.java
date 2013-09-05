@@ -17,22 +17,26 @@ public class ShoppingListTest {
     ShoppingList shoppingList;
 
     @Inject
-    ShoppingListItemFactory itemFactory;
+    ShoppingList.Factory shoppingListFactory;
 
     @Inject
-    CompositeMeasurementFactory measurementFactory;
+    ShoppingListItem.Factory itemFactory;
+
+    @Inject
+    CompositeMeasurement.Factory measurementFactory;
 
     public static class Module extends JukitoModule {
         protected void configureTest() {
-            install(new FactoryModuleBuilder().build(SingleMeasurementFactory.class));
-            install(new FactoryModuleBuilder().build(CompositeMeasurementFactory.class));
-            install(new FactoryModuleBuilder().build(ShoppingListItemFactory.class));
+            install(new FactoryModuleBuilder().build(SingleMeasurement.Factory.class));
+            install(new FactoryModuleBuilder().build(CompositeMeasurement.Factory.class));
+            install(new FactoryModuleBuilder().build(ShoppingListItem.Factory.class));
+            install(new FactoryModuleBuilder().build(ShoppingList.Factory.class));
         }
     }
 
     @Before
     public void setUp() {
-        shoppingList = new ShoppingList();
+        shoppingList = shoppingListFactory.create();
     }
 
     @Test

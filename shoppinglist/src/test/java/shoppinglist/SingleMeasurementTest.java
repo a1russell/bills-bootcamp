@@ -13,11 +13,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(JukitoRunner.class)
 public class SingleMeasurementTest {
     @Inject
-    SingleMeasurementFactory measurementFactory;
+    SingleMeasurement.Factory measurementFactory;
 
     public static class Module extends JukitoModule {
         protected void configureTest() {
-            install(new FactoryModuleBuilder().build(SingleMeasurementFactory.class));
+            install(new FactoryModuleBuilder().build(SingleMeasurement.Factory.class));
         }
     }
 

@@ -1,18 +1,29 @@
 package shoppinglist;
 
+import com.google.inject.Inject;
+
 import java.util.Collection;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 public class ShoppingList implements TextRepresentable {
-    private final ElementToCollectionAdder<ShoppingListItem, String, CompositeMeasurement> adder;
-    private final TextJoiner textJoiner;
     private final Collection<ShoppingListItem> shoppingListItems;
 
-    public ShoppingList() {
-        adder = new ElementToCollectionAdder<ShoppingListItem, String, CompositeMeasurement>();
-        shoppingListItems = newArrayList();
-        textJoiner = new TextJoiner();
+    private final ElementToCollectionAdder<ShoppingListItem, String, CompositeMeasurement> elementToCollectionAdder;
+    private final TextJoiner textJoiner;
+
+    public interface Factory {
+        ShoppingList create();
+    }
+
+    @Inject
+    private ShoppingList(ElementToCollectionAdder<ShoppingListItem,
+                                                  String,
+                                                  CompositeMeasurement> elementToCollectionAdder,
+                         TextJoiner textJoiner) {
+        this.elementToCollectionAdder = elementToCollectionAdder;
+        this.textJoiner = textJoiner;
+        this.shoppingListItems = newArrayList();
     }
 
     @Override
@@ -21,6 +32,6 @@ public class ShoppingList implements TextRepresentable {
     }
 
     public void add(ShoppingListItem shoppingListItem) {
-        adder.add(shoppingListItem, shoppingListItems);
+        elementToCollectionAdder.add(shoppingListItem, shoppingListItems);
     }
 }
