@@ -6,21 +6,18 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class ShoppingList implements TextRepresentable {
     private final ElementToCollectionAdder<ShoppingListItem, String, CompositeMeasurement> adder;
+    private final TextJoiner textJoiner;
     private final Collection<ShoppingListItem> shoppingListItems;
 
     public ShoppingList() {
         adder = new ElementToCollectionAdder<ShoppingListItem, String, CompositeMeasurement>();
         shoppingListItems = newArrayList();
+        textJoiner = new TextJoiner();
     }
 
     @Override
     public String getText() {
-        String text = "";
-        String separator = "\n";
-        for (TextRepresentable shoppingListItem : shoppingListItems) {
-            text += shoppingListItem.getText() + separator;
-        }
-        return text.substring(0, text.length() - separator.length());
+        return textJoiner.join(shoppingListItems, "\n");
     }
 
     public void add(ShoppingListItem shoppingListItem) {

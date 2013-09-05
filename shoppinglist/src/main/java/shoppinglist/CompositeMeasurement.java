@@ -9,6 +9,7 @@ import static com.google.common.collect.Sets.newHashSet;
 
 public class CompositeMeasurement implements TextRepresentable {
     private final ElementToCollectionAdder<SingleMeasurement, String, Double> adder;
+    private final TextJoiner textJoiner;
     Collection<SingleMeasurement> measurements;
 
     @Inject
@@ -18,6 +19,7 @@ public class CompositeMeasurement implements TextRepresentable {
     CompositeMeasurement(SingleMeasurementFactory singleMeasurementFactory,
                          @Assisted double quantity, @Assisted String unit) {
         this.adder = new ElementToCollectionAdder<SingleMeasurement, String, Double>();
+        this.textJoiner = new TextJoiner();
         this.singleMeasurementFactory = singleMeasurementFactory;
         this.measurements = newHashSet();
         add(this.singleMeasurementFactory.create(quantity, unit));
@@ -25,12 +27,7 @@ public class CompositeMeasurement implements TextRepresentable {
 
     @Override
     public String getText() {
-        String text = "";
-        String separator = ", ";
-        for (TextRepresentable measurement : measurements) {
-            text += measurement.getText() + separator;
-        }
-        return text.substring(0, text.length() - separator.length());
+        return new TextJoiner().join(measurements, ", ");
     }
 
     public void add(SingleMeasurement singleMeasurement) {
