@@ -1,0 +1,18 @@
+apply plugin: 'scala'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://oss.sonatype.org/content/repositories/releases"
+    }
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.10.+'
+    testCompile 'junit:junit:4.+'
+    testCompile 'org.specs2:specs2_2.10:2.2.+'
+}
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.useAnt = false
+}

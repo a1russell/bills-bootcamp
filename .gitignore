@@ -2,5 +2,6 @@
 .gradle
 out
 build
+target
 *.iml
 *.class
