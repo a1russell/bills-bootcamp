@@ -7,19 +7,19 @@ class CenteredDiamondSpec extends Specification {
 
   "A centered diamond of size 1" should {
     "consist of 1 star" in {
-      CenteredDiamond(1) must be_==("*\n")
+      centeredDiamond(1) must be_==("*\n")
     }
   }
 
   "A centered diamond of size 2" should {
     "not be valid" in {
-      CenteredDiamond(2) must throwAn[IllegalArgumentException]
+      centeredDiamond(2) must throwAn[IllegalArgumentException]
     }
   }
 
   "A centered diamond of size 5" should {
     "look like a centered diamond, 5 stars wide" in {
-      CenteredDiamond(5) must be_==("""|  *
+      centeredDiamond(5) must be_==("""|  *
                                        | ***
                                        |*****
                                        | ***
