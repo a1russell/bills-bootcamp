@@ -10,4 +10,10 @@ class CenteredDiamondSpec extends Specification {
       CenteredDiamond(1) must be_==("*")
     }
   }
+
+  "A centered diamond of size 2" should {
+    "not be valid" in {
+      CenteredDiamond(2) must throwAn[IllegalArgumentException]
+    }
+  }
 }
