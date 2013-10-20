@@ -11,12 +11,10 @@ object CenteredDiamond extends (Int => String) {
     val padding = " " * paddingSize
     val stars = "*" * current
     val currentLine = padding + stars + "\n"
-    var result = ""
-    result += currentLine
     if (current < size) {
-      result += apply(size, current + 2)
-      result += currentLine
+      currentLine + apply(size, current + 2) + currentLine
+    } else {
+      currentLine
     }
-    result
   }
 }
